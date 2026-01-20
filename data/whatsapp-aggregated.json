@@ -1,0 +1,1300 @@
+{
+  "generatedAt": "2026-01-20T21:35:37Z",
+  "stats": {
+    "totalMessages": 9470,
+    "uniqueParticipants": 40,
+    "daysSpan": 1430,
+    "activeDays": 694,
+    "avgPerDay": 13.6
+  },
+  "hourly": [
+    {
+      "hour": 0,
+      "count": 228
+    },
+    {
+      "hour": 1,
+      "count": 58
+    },
+    {
+      "hour": 2,
+      "count": 15
+    },
+    {
+      "hour": 3,
+      "count": 11
+    },
+    {
+      "hour": 4,
+      "count": 14
+    },
+    {
+      "hour": 5,
+      "count": 38
+    },
+    {
+      "hour": 6,
+      "count": 49
+    },
+    {
+      "hour": 7,
+      "count": 259
+    },
+    {
+      "hour": 8,
+      "count": 364
+    },
+    {
+      "hour": 9,
+      "count": 490
+    },
+    {
+      "hour": 10,
+      "count": 510
+    },
+    {
+      "hour": 11,
+      "count": 627
+    },
+    {
+      "hour": 12,
+      "count": 612
+    },
+    {
+      "hour": 13,
+      "count": 863
+    },
+    {
+      "hour": 14,
+      "count": 705
+    },
+    {
+      "hour": 15,
+      "count": 385
+    },
+    {
+      "hour": 16,
+      "count": 395
+    },
+    {
+      "hour": 17,
+      "count": 461
+    },
+    {
+      "hour": 18,
+      "count": 553
+    },
+    {
+      "hour": 19,
+      "count": 474
+    },
+    {
+      "hour": 20,
+      "count": 619
+    },
+    {
+      "hour": 21,
+      "count": 677
+    },
+    {
+      "hour": 22,
+      "count": 595
+    },
+    {
+      "hour": 23,
+      "count": 468
+    }
+  ],
+  "daily": [
+    {
+      "day": 0,
+      "count": 1293
+    },
+    {
+      "day": 1,
+      "count": 1766
+    },
+    {
+      "day": 2,
+      "count": 1331
+    },
+    {
+      "day": 3,
+      "count": 1212
+    },
+    {
+      "day": 4,
+      "count": 1458
+    },
+    {
+      "day": 5,
+      "count": 1308
+    },
+    {
+      "day": 6,
+      "count": 1102
+    }
+  ],
+  "monthly": [
+    {
+      "month": "2022-02",
+      "count": 161
+    },
+    {
+      "month": "2022-03",
+      "count": 496
+    },
+    {
+      "month": "2022-04",
+      "count": 221
+    },
+    {
+      "month": "2022-05",
+      "count": 475
+    },
+    {
+      "month": "2022-06",
+      "count": 231
+    },
+    {
+      "month": "2022-07",
+      "count": 205
+    },
+    {
+      "month": "2022-08",
+      "count": 65
+    },
+    {
+      "month": "2022-09",
+      "count": 141
+    },
+    {
+      "month": "2022-10",
+      "count": 150
+    },
+    {
+      "month": "2022-11",
+      "count": 307
+    },
+    {
+      "month": "2022-12",
+      "count": 158
+    },
+    {
+      "month": "2023-01",
+      "count": 192
+    },
+    {
+      "month": "2023-02",
+      "count": 97
+    },
+    {
+      "month": "2023-03",
+      "count": 375
+    },
+    {
+      "month": "2023-04",
+      "count": 351
+    },
+    {
+      "month": "2023-05",
+      "count": 293
+    },
+    {
+      "month": "2023-06",
+      "count": 206
+    },
+    {
+      "month": "2023-07",
+      "count": 6
+    },
+    {
+      "month": "2023-08",
+      "count": 43
+    },
+    {
+      "month": "2023-09",
+      "count": 79
+    },
+    {
+      "month": "2023-10",
+      "count": 180
+    },
+    {
+      "month": "2023-11",
+      "count": 268
+    },
+    {
+      "month": "2023-12",
+      "count": 183
+    },
+    {
+      "month": "2024-01",
+      "count": 833
+    },
+    {
+      "month": "2024-02",
+      "count": 154
+    },
+    {
+      "month": "2024-03",
+      "count": 366
+    },
+    {
+      "month": "2024-04",
+      "count": 172
+    },
+    {
+      "month": "2024-05",
+      "count": 131
+    },
+    {
+      "month": "2024-06",
+      "count": 40
+    },
+    {
+      "month": "2024-07",
+      "count": 37
+    },
+    {
+      "month": "2024-08",
+      "count": 30
+    },
+    {
+      "month": "2024-09",
+      "count": 41
+    },
+    {
+      "month": "2024-10",
+      "count": 98
+    },
+    {
+      "month": "2024-11",
+      "count": 152
+    },
+    {
+      "month": "2025-09",
+      "count": 45
+    },
+    {
+      "month": "2025-10",
+      "count": 749
+    },
+    {
+      "month": "2025-11",
+      "count": 491
+    },
+    {
+      "month": "2025-12",
+      "count": 534
+    },
+    {
+      "month": "2026-01",
+      "count": 714
+    }
+  ],
+  "heatmap": [
+    {
+      "day": 0,
+      "hour": 0,
+      "count": 16
+    },
+    {
+      "day": 0,
+      "hour": 1,
+      "count": 9
+    },
+    {
+      "day": 0,
+      "hour": 2,
+      "count": 2
+    },
+    {
+      "day": 0,
+      "hour": 3,
+      "count": 0
+    },
+    {
+      "day": 0,
+      "hour": 4,
+      "count": 2
+    },
+    {
+      "day": 0,
+      "hour": 5,
+      "count": 3
+    },
+    {
+      "day": 0,
+      "hour": 6,
+      "count": 7
+    },
+    {
+      "day": 0,
+      "hour": 7,
+      "count": 16
+    },
+    {
+      "day": 0,
+      "hour": 8,
+      "count": 48
+    },
+    {
+      "day": 0,
+      "hour": 9,
+      "count": 112
+    },
+    {
+      "day": 0,
+      "hour": 10,
+      "count": 64
+    },
+    {
+      "day": 0,
+      "hour": 11,
+      "count": 47
+    },
+    {
+      "day": 0,
+      "hour": 12,
+      "count": 53
+    },
+    {
+      "day": 0,
+      "hour": 13,
+      "count": 65
+    },
+    {
+      "day": 0,
+      "hour": 14,
+      "count": 148
+    },
+    {
+      "day": 0,
+      "hour": 15,
+      "count": 59
+    },
+    {
+      "day": 0,
+      "hour": 16,
+      "count": 60
+    },
+    {
+      "day": 0,
+      "hour": 17,
+      "count": 90
+    },
+    {
+      "day": 0,
+      "hour": 18,
+      "count": 80
+    },
+    {
+      "day": 0,
+      "hour": 19,
+      "count": 40
+    },
+    {
+      "day": 0,
+      "hour": 20,
+      "count": 85
+    },
+    {
+      "day": 0,
+      "hour": 21,
+      "count": 112
+    },
+    {
+      "day": 0,
+      "hour": 22,
+      "count": 122
+    },
+    {
+      "day": 0,
+      "hour": 23,
+      "count": 53
+    },
+    {
+      "day": 1,
+      "hour": 0,
+      "count": 11
+    },
+    {
+      "day": 1,
+      "hour": 1,
+      "count": 3
+    },
+    {
+      "day": 1,
+      "hour": 2,
+      "count": 1
+    },
+    {
+      "day": 1,
+      "hour": 3,
+      "count": 0
+    },
+    {
+      "day": 1,
+      "hour": 4,
+      "count": 2
+    },
+    {
+      "day": 1,
+      "hour": 5,
+      "count": 4
+    },
+    {
+      "day": 1,
+      "hour": 6,
+      "count": 4
+    },
+    {
+      "day": 1,
+      "hour": 7,
+      "count": 40
+    },
+    {
+      "day": 1,
+      "hour": 8,
+      "count": 83
+    },
+    {
+      "day": 1,
+      "hour": 9,
+      "count": 60
+    },
+    {
+      "day": 1,
+      "hour": 10,
+      "count": 175
+    },
+    {
+      "day": 1,
+      "hour": 11,
+      "count": 96
+    },
+    {
+      "day": 1,
+      "hour": 12,
+      "count": 103
+    },
+    {
+      "day": 1,
+      "hour": 13,
+      "count": 161
+    },
+    {
+      "day": 1,
+      "hour": 14,
+      "count": 96
+    },
+    {
+      "day": 1,
+      "hour": 15,
+      "count": 56
+    },
+    {
+      "day": 1,
+      "hour": 16,
+      "count": 42
+    },
+    {
+      "day": 1,
+      "hour": 17,
+      "count": 91
+    },
+    {
+      "day": 1,
+      "hour": 18,
+      "count": 179
+    },
+    {
+      "day": 1,
+      "hour": 19,
+      "count": 99
+    },
+    {
+      "day": 1,
+      "hour": 20,
+      "count": 140
+    },
+    {
+      "day": 1,
+      "hour": 21,
+      "count": 132
+    },
+    {
+      "day": 1,
+      "hour": 22,
+      "count": 121
+    },
+    {
+      "day": 1,
+      "hour": 23,
+      "count": 67
+    },
+    {
+      "day": 2,
+      "hour": 0,
+      "count": 16
+    },
+    {
+      "day": 2,
+      "hour": 1,
+      "count": 8
+    },
+    {
+      "day": 2,
+      "hour": 2,
+      "count": 2
+    },
+    {
+      "day": 2,
+      "hour": 3,
+      "count": 0
+    },
+    {
+      "day": 2,
+      "hour": 4,
+      "count": 0
+    },
+    {
+      "day": 2,
+      "hour": 5,
+      "count": 8
+    },
+    {
+      "day": 2,
+      "hour": 6,
+      "count": 10
+    },
+    {
+      "day": 2,
+      "hour": 7,
+      "count": 51
+    },
+    {
+      "day": 2,
+      "hour": 8,
+      "count": 54
+    },
+    {
+      "day": 2,
+      "hour": 9,
+      "count": 62
+    },
+    {
+      "day": 2,
+      "hour": 10,
+      "count": 56
+    },
+    {
+      "day": 2,
+      "hour": 11,
+      "count": 75
+    },
+    {
+      "day": 2,
+      "hour": 12,
+      "count": 106
+    },
+    {
+      "day": 2,
+      "hour": 13,
+      "count": 166
+    },
+    {
+      "day": 2,
+      "hour": 14,
+      "count": 111
+    },
+    {
+      "day": 2,
+      "hour": 15,
+      "count": 29
+    },
+    {
+      "day": 2,
+      "hour": 16,
+      "count": 61
+    },
+    {
+      "day": 2,
+      "hour": 17,
+      "count": 56
+    },
+    {
+      "day": 2,
+      "hour": 18,
+      "count": 59
+    },
+    {
+      "day": 2,
+      "hour": 19,
+      "count": 73
+    },
+    {
+      "day": 2,
+      "hour": 20,
+      "count": 90
+    },
+    {
+      "day": 2,
+      "hour": 21,
+      "count": 95
+    },
+    {
+      "day": 2,
+      "hour": 22,
+      "count": 81
+    },
+    {
+      "day": 2,
+      "hour": 23,
+      "count": 62
+    },
+    {
+      "day": 3,
+      "hour": 0,
+      "count": 41
+    },
+    {
+      "day": 3,
+      "hour": 1,
+      "count": 4
+    },
+    {
+      "day": 3,
+      "hour": 2,
+      "count": 1
+    },
+    {
+      "day": 3,
+      "hour": 3,
+      "count": 1
+    },
+    {
+      "day": 3,
+      "hour": 4,
+      "count": 2
+    },
+    {
+      "day": 3,
+      "hour": 5,
+      "count": 3
+    },
+    {
+      "day": 3,
+      "hour": 6,
+      "count": 8
+    },
+    {
+      "day": 3,
+      "hour": 7,
+      "count": 31
+    },
+    {
+      "day": 3,
+      "hour": 8,
+      "count": 40
+    },
+    {
+      "day": 3,
+      "hour": 9,
+      "count": 39
+    },
+    {
+      "day": 3,
+      "hour": 10,
+      "count": 28
+    },
+    {
+      "day": 3,
+      "hour": 11,
+      "count": 50
+    },
+    {
+      "day": 3,
+      "hour": 12,
+      "count": 79
+    },
+    {
+      "day": 3,
+      "hour": 13,
+      "count": 122
+    },
+    {
+      "day": 3,
+      "hour": 14,
+      "count": 101
+    },
+    {
+      "day": 3,
+      "hour": 15,
+      "count": 45
+    },
+    {
+      "day": 3,
+      "hour": 16,
+      "count": 65
+    },
+    {
+      "day": 3,
+      "hour": 17,
+      "count": 76
+    },
+    {
+      "day": 3,
+      "hour": 18,
+      "count": 86
+    },
+    {
+      "day": 3,
+      "hour": 19,
+      "count": 103
+    },
+    {
+      "day": 3,
+      "hour": 20,
+      "count": 69
+    },
+    {
+      "day": 3,
+      "hour": 21,
+      "count": 81
+    },
+    {
+      "day": 3,
+      "hour": 22,
+      "count": 87
+    },
+    {
+      "day": 3,
+      "hour": 23,
+      "count": 50
+    },
+    {
+      "day": 4,
+      "hour": 0,
+      "count": 20
+    },
+    {
+      "day": 4,
+      "hour": 1,
+      "count": 7
+    },
+    {
+      "day": 4,
+      "hour": 2,
+      "count": 1
+    },
+    {
+      "day": 4,
+      "hour": 3,
+      "count": 0
+    },
+    {
+      "day": 4,
+      "hour": 4,
+      "count": 1
+    },
+    {
+      "day": 4,
+      "hour": 5,
+      "count": 1
+    },
+    {
+      "day": 4,
+      "hour": 6,
+      "count": 9
+    },
+    {
+      "day": 4,
+      "hour": 7,
+      "count": 36
+    },
+    {
+      "day": 4,
+      "hour": 8,
+      "count": 62
+    },
+    {
+      "day": 4,
+      "hour": 9,
+      "count": 77
+    },
+    {
+      "day": 4,
+      "hour": 10,
+      "count": 54
+    },
+    {
+      "day": 4,
+      "hour": 11,
+      "count": 109
+    },
+    {
+      "day": 4,
+      "hour": 12,
+      "count": 103
+    },
+    {
+      "day": 4,
+      "hour": 13,
+      "count": 160
+    },
+    {
+      "day": 4,
+      "hour": 14,
+      "count": 96
+    },
+    {
+      "day": 4,
+      "hour": 15,
+      "count": 78
+    },
+    {
+      "day": 4,
+      "hour": 16,
+      "count": 66
+    },
+    {
+      "day": 4,
+      "hour": 17,
+      "count": 76
+    },
+    {
+      "day": 4,
+      "hour": 18,
+      "count": 75
+    },
+    {
+      "day": 4,
+      "hour": 19,
+      "count": 72
+    },
+    {
+      "day": 4,
+      "hour": 20,
+      "count": 96
+    },
+    {
+      "day": 4,
+      "hour": 21,
+      "count": 117
+    },
+    {
+      "day": 4,
+      "hour": 22,
+      "count": 94
+    },
+    {
+      "day": 4,
+      "hour": 23,
+      "count": 48
+    },
+    {
+      "day": 5,
+      "hour": 0,
+      "count": 52
+    },
+    {
+      "day": 5,
+      "hour": 1,
+      "count": 10
+    },
+    {
+      "day": 5,
+      "hour": 2,
+      "count": 5
+    },
+    {
+      "day": 5,
+      "hour": 3,
+      "count": 6
+    },
+    {
+      "day": 5,
+      "hour": 4,
+      "count": 7
+    },
+    {
+      "day": 5,
+      "hour": 5,
+      "count": 5
+    },
+    {
+      "day": 5,
+      "hour": 6,
+      "count": 8
+    },
+    {
+      "day": 5,
+      "hour": 7,
+      "count": 71
+    },
+    {
+      "day": 5,
+      "hour": 8,
+      "count": 62
+    },
+    {
+      "day": 5,
+      "hour": 9,
+      "count": 82
+    },
+    {
+      "day": 5,
+      "hour": 10,
+      "count": 48
+    },
+    {
+      "day": 5,
+      "hour": 11,
+      "count": 150
+    },
+    {
+      "day": 5,
+      "hour": 12,
+      "count": 96
+    },
+    {
+      "day": 5,
+      "hour": 13,
+      "count": 116
+    },
+    {
+      "day": 5,
+      "hour": 14,
+      "count": 49
+    },
+    {
+      "day": 5,
+      "hour": 15,
+      "count": 48
+    },
+    {
+      "day": 5,
+      "hour": 16,
+      "count": 45
+    },
+    {
+      "day": 5,
+      "hour": 17,
+      "count": 37
+    },
+    {
+      "day": 5,
+      "hour": 18,
+      "count": 42
+    },
+    {
+      "day": 5,
+      "hour": 19,
+      "count": 63
+    },
+    {
+      "day": 5,
+      "hour": 20,
+      "count": 86
+    },
+    {
+      "day": 5,
+      "hour": 21,
+      "count": 63
+    },
+    {
+      "day": 5,
+      "hour": 22,
+      "count": 37
+    },
+    {
+      "day": 5,
+      "hour": 23,
+      "count": 120
+    },
+    {
+      "day": 6,
+      "hour": 0,
+      "count": 72
+    },
+    {
+      "day": 6,
+      "hour": 1,
+      "count": 17
+    },
+    {
+      "day": 6,
+      "hour": 2,
+      "count": 3
+    },
+    {
+      "day": 6,
+      "hour": 3,
+      "count": 4
+    },
+    {
+      "day": 6,
+      "hour": 4,
+      "count": 0
+    },
+    {
+      "day": 6,
+      "hour": 5,
+      "count": 14
+    },
+    {
+      "day": 6,
+      "hour": 6,
+      "count": 3
+    },
+    {
+      "day": 6,
+      "hour": 7,
+      "count": 14
+    },
+    {
+      "day": 6,
+      "hour": 8,
+      "count": 15
+    },
+    {
+      "day": 6,
+      "hour": 9,
+      "count": 58
+    },
+    {
+      "day": 6,
+      "hour": 10,
+      "count": 85
+    },
+    {
+      "day": 6,
+      "hour": 11,
+      "count": 100
+    },
+    {
+      "day": 6,
+      "hour": 12,
+      "count": 72
+    },
+    {
+      "day": 6,
+      "hour": 13,
+      "count": 73
+    },
+    {
+      "day": 6,
+      "hour": 14,
+      "count": 104
+    },
+    {
+      "day": 6,
+      "hour": 15,
+      "count": 70
+    },
+    {
+      "day": 6,
+      "hour": 16,
+      "count": 56
+    },
+    {
+      "day": 6,
+      "hour": 17,
+      "count": 35
+    },
+    {
+      "day": 6,
+      "hour": 18,
+      "count": 32
+    },
+    {
+      "day": 6,
+      "hour": 19,
+      "count": 24
+    },
+    {
+      "day": 6,
+      "hour": 20,
+      "count": 53
+    },
+    {
+      "day": 6,
+      "hour": 21,
+      "count": 77
+    },
+    {
+      "day": 6,
+      "hour": 22,
+      "count": 53
+    },
+    {
+      "day": 6,
+      "hour": 23,
+      "count": 68
+    }
+  ],
+  "contributors": [
+    {
+      "name": "+351 912 551 133",
+      "count": 1286
+    },
+    {
+      "name": "Colegio Cedros Com Foto Sem Nome",
+      "count": 1215
+    },
+    {
+      "name": "Rui Pedro",
+      "count": 840
+    },
+    {
+      "name": "+351 915 017 414",
+      "count": 699
+    },
+    {
+      "name": "+351 938 660 054",
+      "count": 601
+    },
+    {
+      "name": "+351 919 643 070",
+      "count": 503
+    },
+    {
+      "name": "+351 918 744 791",
+      "count": 408
+    },
+    {
+      "name": "Tiago Burnay",
+      "count": 402
+    },
+    {
+      "name": "cedros",
+      "count": 361
+    },
+    {
+      "name": "+351 919 187 448",
+      "count": 315
+    },
+    {
+      "name": "+61 451 008 998",
+      "count": 308
+    },
+    {
+      "name": "+55 69 8115-6915",
+      "count": 275
+    },
+    {
+      "name": "+351 937 036 629",
+      "count": 259
+    },
+    {
+      "name": "+351 936 586 711",
+      "count": 247
+    },
+    {
+      "name": "+351 913 250 069",
+      "count": 190
+    },
+    {
+      "name": "+351 935 710 386",
+      "count": 157
+    },
+    {
+      "name": "+351 967 850 292",
+      "count": 154
+    },
+    {
+      "name": "+351 937 042 033",
+      "count": 148
+    },
+    {
+      "name": "+351 936 264 750",
+      "count": 140
+    },
+    {
+      "name": "+351 932 883 221",
+      "count": 131
+    },
+    {
+      "name": "Xani",
+      "count": 105
+    },
+    {
+      "name": "+351 962 006 169",
+      "count": 99
+    },
+    {
+      "name": "+351 918 622 903",
+      "count": 97
+    },
+    {
+      "name": "+351 919 385 727",
+      "count": 88
+    },
+    {
+      "name": "+351 919 034 686",
+      "count": 83
+    },
+    {
+      "name": "+351 910 252 930",
+      "count": 70
+    },
+    {
+      "name": "+351 912 518 239",
+      "count": 63
+    },
+    {
+      "name": "+351 939 871 400",
+      "count": 63
+    },
+    {
+      "name": "+351 936 160 697",
+      "count": 58
+    },
+    {
+      "name": "+351 963 314 707",
+      "count": 46
+    },
+    {
+      "name": "+351 939 084 981",
+      "count": 22
+    },
+    {
+      "name": "+351 939 434 275",
+      "count": 13
+    },
+    {
+      "name": "+351 930 489 882",
+      "count": 9
+    },
+    {
+      "name": "+351 966 649 659",
+      "count": 6
+    },
+    {
+      "name": "+351 966 933 582",
+      "count": 3
+    },
+    {
+      "name": "+351 934 907 353",
+      "count": 2
+    },
+    {
+      "name": "Joao Pedro Craveiro (Cedros)",
+      "count": 1
+    },
+    {
+      "name": "+351 919 241 492",
+      "count": 1
+    },
+    {
+      "name": "+351 962 533 908",
+      "count": 1
+    },
+    {
+      "name": "+351 966 237 760",
+      "count": 1
+    }
+  ]
+}
