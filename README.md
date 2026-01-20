@@ -1,77 +1,81 @@
-# WhatsApp Group Analysis - Cedros
+# Análise de Grupo WhatsApp - Cedros
 
-Interactive D3.js visualization and data analysis of WhatsApp group chat patterns.
+Visualização interativa em D3.js e análise de dados sobre padrões de conversas do grupo de WhatsApp.
 
-## Features
+## Funcionalidades
 
-- **Activity Heatmap**: Hour × Day of week visualization
-- **Temporal Analysis**: Hourly, daily, and monthly activity patterns
-- **Participant Rankings**: All 40 group members ranked by activity
-- **Interactive Charts**: Hover tooltips with detailed statistics
+- **Mapa de Calor**: Visualização Hora × Dia da semana
+- **Análise Temporal**: Padrões horários, diários e mensais
+- **Ranking de Participantes**: 40 membros ordenados por atividade
+- **Gráficos Interativos**: Tooltips com estatísticas detalhadas
 
-## Screenshots
+## Capturas de Ecrã
 
-![Dashboard Preview](docs/preview.png)
+![Pré-visualização do Dashboard](docs/preview.png)
 
-## Getting Started
+## Como começar
 
-### Prerequisites
+### Pré-requisitos
 
-- Python 3.x (for local server)
-- Modern web browser
-- WhatsApp chat export (CSV format)
+- Python 3.x (para servidor local)
+- Navegador moderno
+- Exportação de chat WhatsApp (formato CSV)
 
-### Running Locally
+### Execução local
 
-1. Clone the repository:
-```bash
-git clone https://github.com/AlexandreXavier/analysis-whatsapp.git
-cd analysis-whatsapp
-```
+1. Clonar o repositório:
 
-2. Place your WhatsApp CSV export as `../w.csv` (parent directory)
+    ```bash
+    git clone https://github.com/AlexandreXavier/analysis-whatsapp.git
+    cd analysis-whatsapp
+    ```
 
-3. Start a local server:
-```bash
-python -m http.server 8000
-```
+2. Colocar o CSV exportado como `../w.csv` (diretório pai)
 
-4. Open in browser: `http://localhost:8000/activity-visualization.html`
+3. Iniciar um servidor local:
 
-## Data Format
+    ```bash
+    python -m http.server 8000
+    ```
 
-The expected CSV format:
+4. Abrir no navegador: `http://localhost:8000/activity-visualization.html`
+
+## Formato de Dados
+
+Formato CSV esperado:
+
 ```csv
 date (YYYY-MM-DD),time (hh:mm),name,text
 22-02-18,20:22,John Doe,"Hello everyone!",
 ```
 
-## Files
+## Ficheiros
 
-- `activity-visualization.html` - Main D3.js interactive dashboard
-- `whatsapp_analysis.ipynb` - Jupyter notebook with Python analysis
-- `CLAUDE.md` - Development guidance for AI assistants
+- `activity-visualization.html` - Dashboard interativo principal em D3.js
+- `whatsapp_analysis.ipynb` - Notebook Jupyter com análise em Python
+- `CLAUDE.md` - Orientações de desenvolvimento para assistentes de IA
 
-## Key Findings
+## Principais Conclusões
 
-- **9,470 messages** from **40 participants** over ~4 years
-- **Peak activity**: Lunch time (13:00) and Tuesdays
-- **Top 10 contributors** account for ~70% of messages
-- Group culture: Birthday celebrations ("parabéns") and warm greetings ("abraço")
+- **9 470 mensagens** de **40 participantes** ao longo de ~4 anos
+- **Pico de atividade**: Hora de almoço (13:00) e terças-feiras
+- **Top 10 contribuintes** representam ~70% das mensagens
+- Cultura do grupo: Parabéns e cumprimentos calorosos ("abraço")
 
-## Technologies
+## Tecnologias
 
-- D3.js v7 for visualizations
-- Pandas for data analysis
-- Vanilla JavaScript (no frameworks)
+- D3.js v7 para visualizações
+- Pandas para análise de dados
+- JavaScript puro (sem frameworks)
 
-## Privacy
+## Privacidade
 
-This project is designed for personal use. The `.gitignore` excludes:
-- CSV data files (contain personal messages)
-- Screenshots with personal information
-- Any files with phone numbers or names
+Projeto concebido para uso pessoal. O `.gitignore` exclui:
 
-## License
+- Ficheiros CSV com dados pessoais
+- Capturas com informação privada
+- Quaisquer ficheiros com números de telefone ou nomes
 
-MIT License
+## Licença
+
+Licença MIT

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-PT">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WhatsApp Activity Patterns - Cedros Group</title>
+    <title>Padrões de Atividade no WhatsApp - Grupo Cedros</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
         * {
@@ -176,8 +176,8 @@
     </style>
 </head>
 <body>
-    <h1>WhatsApp Activity Patterns</h1>
-    <p class="subtitle">Cedros School Reunion Group • "A nossa turma" • Feb 2022 - Jan 2026</p>
+    <h1>Padrões de Atividade no WhatsApp</h1>
+    <p class="subtitle">Grupo de Antigos Alunos do Cedros • "A nossa turma" • Fev 2022 - Jan 2026</p>
 
     <div class="dashboard">
         <div class="chart-container full-width">
@@ -185,32 +185,32 @@
         </div>
 
         <div class="chart-container full-width">
-            <div class="chart-title">📅 Activity Heatmap: Hour × Day of Week</div>
-            <div class="chart-description">Darker colors indicate more messages. Hover for details.</div>
+            <div class="chart-title">📅 Mapa de Calor: Hora × Dia da Semana</div>
+            <div class="chart-description">Cores mais escuras indicam mais mensagens. Passe com o rato para ver detalhes.</div>
             <div id="heatmap"></div>
         </div>
 
         <div class="chart-container">
-            <div class="chart-title">⏰ Messages by Hour</div>
-            <div class="chart-description">Distribution of messages throughout the day</div>
+            <div class="chart-title">⏰ Mensagens por Hora</div>
+            <div class="chart-description">Distribuição de mensagens ao longo do dia</div>
             <div id="hourly-chart"></div>
         </div>
 
         <div class="chart-container">
-            <div class="chart-title">📆 Messages by Day of Week</div>
-            <div class="chart-description">Weekly activity pattern</div>
+            <div class="chart-title">📆 Mensagens por Dia da Semana</div>
+            <div class="chart-description">Padrão semanal de atividade</div>
             <div id="daily-chart"></div>
         </div>
 
         <div class="chart-container full-width">
-            <div class="chart-title">📈 Monthly Activity Timeline</div>
-            <div class="chart-description">Message volume over time with trend visualization</div>
+            <div class="chart-title">📈 Linha Temporal Mensal</div>
+            <div class="chart-description">Volume de mensagens ao longo do tempo com tendência</div>
             <div id="timeline-chart"></div>
         </div>
 
         <div class="chart-container full-width">
-            <div class="chart-title">👥 All Participants (40 members)</div>
-            <div class="chart-description">Complete ranking of all group members by message count</div>
+            <div class="chart-title">👥 Todos os Participantes (40 membros)</div>
+            <div class="chart-description">Ranking completo por número de mensagens</div>
             <div id="contributors-chart"></div>
         </div>
     </div>
@@ -225,8 +225,21 @@
         const lineColor = '#00d4ff';
         const areaColor = 'rgba(0, 212, 255, 0.2)';
 
-        const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-        const daysFull = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+        const days = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
+        const daysFull = ['Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado', 'Domingo'];
+
+        const localePt = d3.timeFormatLocale({
+            dateTime: '%A, %e de %B de %Y, %X',
+            date: '%d/%m/%Y',
+            time: '%H:%M:%S',
+            periods: ['AM', 'PM'],
+            days: ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'],
+            shortDays: ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb'],
+            months: ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'],
+            shortMonths: ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez']
+        });
+        const formatMonthYear = localePt.format('%B %Y');
+        const formatAxisMonth = localePt.format('%b %Y');
 
         const tooltip = d3.select('#tooltip');
 
@@ -340,12 +353,12 @@
             renderContributors(contributorData, totalMessages);
 
         }).catch(err => {
-            console.error('Error loading data:', err);
+            console.error('Erro ao carregar os dados:', err);
             document.querySelector('.dashboard').innerHTML = `
                 <div class="chart-container full-width">
                     <div class="loading">
-                        <p>Error loading data. Please ensure you're running a local server.</p>
-                        <p style="margin-top: 10px; font-size: 0.8em;">Run: python -m http.server 8000</p>
+                        <p>Erro ao carregar os dados. Confirme que tem um servidor local a correr.</p>
+                        <p style="margin-top: 10px; font-size: 0.8em;">Comando: python -m http.server 8000</p>
                     </div>
                 </div>
             `;
@@ -355,19 +368,19 @@
             const statsHtml = `
                 <div class="stat-card">
                     <div class="stat-value">${stats.totalMessages.toLocaleString()}</div>
-                    <div class="stat-label">Total Messages</div>
+                    <div class="stat-label">Mensagens Totais</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-value">${stats.uniqueParticipants}</div>
-                    <div class="stat-label">Participants</div>
+                    <div class="stat-label">Participantes</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-value">${stats.activeDays}</div>
-                    <div class="stat-label">Active Days</div>
+                    <div class="stat-label">Dias Ativos</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-value">${stats.avgPerDay}</div>
-                    <div class="stat-label">Avg/Day</div>
+                    <div class="stat-label">Média/Dia</div>
                 </div>
             `;
             document.getElementById('stats').innerHTML = statsHtml;
@@ -429,8 +442,8 @@
                 .on('mouseover', function(event, d) {
                     d3.select(this).attr('stroke', '#fff').attr('stroke-width', 2);
                     tooltip.style('opacity', 1)
-                        .html(`<strong>${daysFull[d.day]}</strong> at <strong>${d.hour}:00</strong><br>
-                               <span class="value">${d.count}</span> messages`)
+                        .html(`<strong>${daysFull[d.day]}</strong> às <strong>${d.hour}:00</strong><br>
+                               <span class="value">${d.count}</span> mensagens`)
                         .style('left', (event.pageX + 10) + 'px')
                         .style('top', (event.pageY - 10) + 'px');
                 })
@@ -547,7 +560,7 @@
                     d3.select(this).attr('fill', barColorHover);
                     tooltip.style('opacity', 1)
                         .html(`<strong>${d.hour}:00 - ${d.hour}:59</strong><br>
-                               <span class="value">${d.count}</span> messages`)
+                               <span class="value">${d.count}</span> mensagens`)
                         .style('left', (event.pageX + 10) + 'px')
                         .style('top', (event.pageY - 10) + 'px');
                 })
@@ -605,7 +618,7 @@
                     d3.select(this).attr('opacity', 0.8);
                     tooltip.style('opacity', 1)
                         .html(`<strong>${daysFull[d.day]}</strong><br>
-                               <span class="value">${d.count}</span> messages`)
+                               <span class="value">${d.count}</span> mensagens`)
                         .style('left', (event.pageX + 10) + 'px')
                         .style('top', (event.pageY - 10) + 'px');
                 })
@@ -630,10 +643,10 @@
                 .attr('transform', `translate(${margin.left + width - 120},${margin.top})`);
 
             legend.append('rect').attr('width', 12).attr('height', 12).attr('fill', barColor).attr('rx', 2);
-            legend.append('text').attr('x', 18).attr('y', 10).attr('fill', '#aaa').attr('font-size', 11).text('Weekday');
+            legend.append('text').attr('x', 18).attr('y', 10).attr('fill', '#aaa').attr('font-size', 11).text('Dias úteis');
 
             legend.append('rect').attr('y', 18).attr('width', 12).attr('height', 12).attr('fill', '#7b2cbf').attr('rx', 2);
-            legend.append('text').attr('x', 18).attr('y', 28).attr('fill', '#aaa').attr('font-size', 11).text('Weekend');
+            legend.append('text').attr('x', 18).attr('y', 28).attr('fill', '#aaa').attr('font-size', 11).text('Fim de semana');
         }
 
         function renderTimeline(data) {
@@ -697,8 +710,8 @@
                 .on('mouseover', function(event, d) {
                     d3.select(this).attr('r', 7);
                     tooltip.style('opacity', 1)
-                        .html(`<strong>${d3.timeFormat('%B %Y')(d.date)}</strong><br>
-                               <span class="value">${d.count}</span> messages`)
+                        .html(`<strong>${formatMonthYear(d.date)}</strong><br>
+                               <span class="value">${d.count}</span> mensagens`)
                         .style('left', (event.pageX + 10) + 'px')
                         .style('top', (event.pageY - 10) + 'px');
                 })
@@ -711,7 +724,7 @@
             g.append('g')
                 .attr('class', 'axis')
                 .attr('transform', `translate(0,${height})`)
-                .call(d3.axisBottom(xScale).ticks(d3.timeMonth.every(6)).tickFormat(d3.timeFormat('%b %Y')))
+                .call(d3.axisBottom(xScale).ticks(d3.timeMonth.every(6)).tickFormat(formatAxisMonth))
                 .selectAll('text')
                 .attr('transform', 'rotate(-45)')
                 .style('text-anchor', 'end');
@@ -729,7 +742,7 @@
                 .attr('text-anchor', 'middle')
                 .attr('fill', '#888')
                 .attr('font-size', 11)
-                .text('Messages');
+                .text('Mensagens');
         }
 
         function renderContributors(data, total) {
@@ -791,7 +804,7 @@
                     const rank = data.findIndex(x => x.name === d.name) + 1;
                     tooltip.style('opacity', 1)
                         .html(`<strong>#${rank} ${d.name}</strong><br>
-                               <span class="value">${d.count}</span> messages (${pct}%)`)
+                               <span class="value">${d.count}</span> mensagens (${pct}%)`)
                         .style('left', (event.pageX + 10) + 'px')
                         .style('top', (event.pageY - 10) + 'px');
                 })
@@ -843,7 +856,7 @@
                     .attr('text-anchor', 'end')
                     .attr('fill', '#666')
                     .attr('font-size', 9)
-                    .text('Top 10 (70% of messages)');
+                    .text('Top 10 (70% das mensagens)');
             }
         }
     </script>
