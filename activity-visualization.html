@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Activity Patterns - Cedros Group</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #eee;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2rem;
+            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #888;
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+        }
+
+        .dashboard {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .chart-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .chart-container.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .chart-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .chart-description {
+            font-size: 0.8rem;
+            color: #888;
+            margin-bottom: 15px;
+        }
+
+        svg {
+            display: block;
+            margin: 0 auto;
+        }
+
+        .axis text {
+            fill: #aaa;
+            font-size: 11px;
+        }
+
+        .axis path,
+        .axis line {
+            stroke: #444;
+        }
+
+        .tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid #00d4ff;
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 13px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: 100;
+        }
+
+        .tooltip .value {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #00d4ff;
+        }
+
+        .legend {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: #888;
+            margin-top: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #888;
+        }
+
+        @media (max-width: 900px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>WhatsApp Activity Patterns</h1>
+    <p class="subtitle">Cedros School Reunion Group • "A nossa turma" • Feb 2022 - Jan 2026</p>
+
+    <div class="dashboard">
+        <div class="chart-container full-width">
+            <div class="stats-grid" id="stats"></div>
+        </div>
+
+        <div class="chart-container full-width">
+            <div class="chart-title">📅 Activity Heatmap: Hour × Day of Week</div>
+            <div class="chart-description">Darker colors indicate more messages. Hover for details.</div>
+            <div id="heatmap"></div>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-title">⏰ Messages by Hour</div>
+            <div class="chart-description">Distribution of messages throughout the day</div>
+            <div id="hourly-chart"></div>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-title">📆 Messages by Day of Week</div>
+            <div class="chart-description">Weekly activity pattern</div>
+            <div id="daily-chart"></div>
+        </div>
+
+        <div class="chart-container full-width">
+            <div class="chart-title">📈 Monthly Activity Timeline</div>
+            <div class="chart-description">Message volume over time with trend visualization</div>
+            <div id="timeline-chart"></div>
+        </div>
+
+        <div class="chart-container full-width">
+            <div class="chart-title">👥 All Participants (40 members)</div>
+            <div class="chart-description">Complete ranking of all group members by message count</div>
+            <div id="contributors-chart"></div>
+        </div>
+    </div>
+
+    <div class="tooltip" id="tooltip"></div>
+
+    <script>
+        // Color scales
+        const heatmapColors = d3.scaleSequential(d3.interpolateYlOrRd);
+        const barColor = '#00d4ff';
+        const barColorHover = '#7b2cbf';
+        const lineColor = '#00d4ff';
+        const areaColor = 'rgba(0, 212, 255, 0.2)';
+
+        const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+        const daysFull = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+        const tooltip = d3.select('#tooltip');
+
+        // Phone number to name mapping (extracted from WhatsApp group info)
+        const nameMapping = {
+            '+55 69 8115-6915': 'Antonio Carlos',
+            '+61 451 008 998': 'Armando Teixeira-Pinto',
+            '+351 935 710 386': 'Dinis Sottomayor',
+            '+351 913 250 069': 'Filipe Cameira',
+            '+351 939 434 275': 'Filipe Sousa Pinto',
+            '+351 937 042 033': 'Filipe Quinta',
+            '+351 918 622 903': 'Francisco Fonseca',
+            '+351 962 533 908': 'Gabriel Campos',
+            '+351 930 489 882': 'Gonçalo Oliveira',
+            '+351 966 933 582': 'Gustavo Sousa',
+            '+351 912 518 239': 'JAC',
+            '+351 919 385 727': 'João Fleming',
+            '+351 966 649 659': 'João Pedro',
+            '+351 939 084 981': 'Jose',
+            '+351 936 264 750': 'Jose Pedro',
+            '+351 932 883 221': 'Lopo Vaz de São Payo',
+            '+351 918 744 791': 'Luis Gagliardini Graça',
+            '+351 912 551 133': 'Miguel MC',
+            '+351 937 036 629': 'Miguel Pereira',
+            '+351 936 160 697': 'Miguel Rocha Reis',
+            '+351 967 850 292': 'Nlaranjo',
+            '+351 966 237 760': 'Nuno',
+            '+351 963 314 707': 'Nuno Brito e Faro',
+            '+351 936 586 711': 'Nuno Motta',
+            '+351 919 034 686': 'Nuno VC',
+            '+351 962 006 169': 'Pedro Barbosa',
+            '+351 939 871 400': 'Pedro Silva',
+            '+351 938 660 054': 'Ricardo Pereira',
+            '+351 919 187 448': 'Rodrigo Adão da Fonseca',
+            '+351 919 241 492': 'Rodrigo Menéres',
+            '+351 919 643 070': 'Toko',
+            'Colegio Cedros Com Foto Sem Nome': 'Colegio Cedros (Foto)',
+            'Colegio Cedros Com Foto S': 'Colegio Cedros (Foto)',
+            'Colegio Cedros Sem Foto e Nome': 'Colegio Cedros (Anon)',
+            'Colegio Cedros Sem Foto Sem Nome Com': 'Colegio Cedros (Anon2)',
+            'Xani': 'Alexandre Xavier'
+        };
+
+        // Function to get display name
+        function getDisplayName(name) {
+            return nameMapping[name] || name;
+        }
+
+        // Load and process data
+        d3.csv('../w.csv').then(rawData => {
+            // Filter valid rows (date format YY-MM-DD)
+            const dateRegex = /^\d{2}-\d{2}-\d{2}$/;
+            const data = rawData.filter(d => dateRegex.test(d['date (YYYY-MM-DD)']));
+
+            // Parse data
+            const parseDate = d3.timeParse('%y-%m-%d');
+            data.forEach(d => {
+                d.date = parseDate(d['date (YYYY-MM-DD)']);
+                d.time = d['time (hh:mm)'];
+                d.hour = parseInt(d.time.split(':')[0]);
+                d.dayOfWeek = d.date.getDay(); // 0 = Sunday
+                d.dayOfWeekMon = (d.dayOfWeek + 6) % 7; // 0 = Monday
+                d.yearMonth = d3.timeFormat('%Y-%m')(d.date);
+                d.originalName = d.name;
+                d.name = getDisplayName(d.name); // Apply name mapping
+            });
+
+            // Calculate statistics
+            const totalMessages = data.length;
+            const uniqueParticipants = new Set(data.map(d => d.name)).size;
+            const dateExtent = d3.extent(data, d => d.date);
+            const daysSpan = Math.round((dateExtent[1] - dateExtent[0]) / (1000 * 60 * 60 * 24));
+            const activeDays = new Set(data.map(d => d3.timeFormat('%Y-%m-%d')(d.date))).size;
+
+            // Render stats
+            renderStats({
+                totalMessages,
+                uniqueParticipants,
+                daysSpan,
+                activeDays,
+                avgPerDay: (totalMessages / activeDays).toFixed(1)
+            });
+
+            // Aggregate data for charts
+            const hourlyData = d3.rollups(data, v => v.length, d => d.hour)
+                .map(([hour, count]) => ({ hour, count }))
+                .sort((a, b) => a.hour - b.hour);
+
+            const dailyData = d3.rollups(data, v => v.length, d => d.dayOfWeekMon)
+                .map(([day, count]) => ({ day, count }))
+                .sort((a, b) => a.day - b.day);
+
+            const monthlyData = d3.rollups(data, v => v.length, d => d.yearMonth)
+                .map(([month, count]) => ({ month, count, date: d3.timeParse('%Y-%m')(month) }))
+                .sort((a, b) => a.date - b.date);
+
+            const heatmapData = d3.rollups(data, v => v.length, d => d.dayOfWeekMon, d => d.hour)
+                .flatMap(([day, hours]) =>
+                    hours.map(([hour, count]) => ({ day, hour, count }))
+                );
+
+            const contributorData = d3.rollups(data, v => v.length, d => d.name)
+                .map(([name, count]) => ({ name, count }))
+                .sort((a, b) => b.count - a.count); // Show ALL participants
+
+            // Render charts
+            renderHeatmap(heatmapData);
+            renderHourlyChart(hourlyData);
+            renderDailyChart(dailyData);
+            renderTimeline(monthlyData);
+            renderContributors(contributorData, totalMessages);
+
+        }).catch(err => {
+            console.error('Error loading data:', err);
+            document.querySelector('.dashboard').innerHTML = `
+                <div class="chart-container full-width">
+                    <div class="loading">
+                        <p>Error loading data. Please ensure you're running a local server.</p>
+                        <p style="margin-top: 10px; font-size: 0.8em;">Run: python -m http.server 8000</p>
+                    </div>
+                </div>
+            `;
+        });
+
+        function renderStats(stats) {
+            const statsHtml = `
+                <div class="stat-card">
+                    <div class="stat-value">${stats.totalMessages.toLocaleString()}</div>
+                    <div class="stat-label">Total Messages</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${stats.uniqueParticipants}</div>
+                    <div class="stat-label">Participants</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${stats.activeDays}</div>
+                    <div class="stat-label">Active Days</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${stats.avgPerDay}</div>
+                    <div class="stat-label">Avg/Day</div>
+                </div>
+            `;
+            document.getElementById('stats').innerHTML = statsHtml;
+        }
+
+        function renderHeatmap(data) {
+            const margin = { top: 30, right: 30, bottom: 50, left: 60 };
+            const cellSize = 35;
+            const width = 24 * cellSize + margin.left + margin.right;
+            const height = 7 * cellSize + margin.top + margin.bottom;
+
+            const svg = d3.select('#heatmap')
+                .append('svg')
+                .attr('width', width)
+                .attr('height', height);
+
+            const g = svg.append('g')
+                .attr('transform', `translate(${margin.left},${margin.top})`);
+
+            // Create full grid data (fill missing values with 0)
+            const fullData = [];
+            for (let day = 0; day < 7; day++) {
+                for (let hour = 0; hour < 24; hour++) {
+                    const existing = data.find(d => d.day === day && d.hour === hour);
+                    fullData.push({
+                        day,
+                        hour,
+                        count: existing ? existing.count : 0
+                    });
+                }
+            }
+
+            const maxCount = d3.max(fullData, d => d.count);
+            heatmapColors.domain([0, maxCount]);
+
+            // X axis (hours)
+            const xScale = d3.scaleBand()
+                .domain(d3.range(24))
+                .range([0, 24 * cellSize])
+                .padding(0.05);
+
+            // Y axis (days)
+            const yScale = d3.scaleBand()
+                .domain(d3.range(7))
+                .range([0, 7 * cellSize])
+                .padding(0.05);
+
+            // Draw cells
+            g.selectAll('rect')
+                .data(fullData)
+                .join('rect')
+                .attr('x', d => xScale(d.hour))
+                .attr('y', d => yScale(d.day))
+                .attr('width', xScale.bandwidth())
+                .attr('height', yScale.bandwidth())
+                .attr('rx', 4)
+                .attr('fill', d => d.count === 0 ? 'rgba(255,255,255,0.03)' : heatmapColors(d.count))
+                .style('cursor', 'pointer')
+                .on('mouseover', function(event, d) {
+                    d3.select(this).attr('stroke', '#fff').attr('stroke-width', 2);
+                    tooltip.style('opacity', 1)
+                        .html(`<strong>${daysFull[d.day]}</strong> at <strong>${d.hour}:00</strong><br>
+                               <span class="value">${d.count}</span> messages`)
+                        .style('left', (event.pageX + 10) + 'px')
+                        .style('top', (event.pageY - 10) + 'px');
+                })
+                .on('mouseout', function() {
+                    d3.select(this).attr('stroke', 'none');
+                    tooltip.style('opacity', 0);
+                });
+
+            // X axis labels
+            g.append('g')
+                .attr('transform', `translate(0,${7 * cellSize + 5})`)
+                .selectAll('text')
+                .data(d3.range(24))
+                .join('text')
+                .attr('x', d => xScale(d) + xScale.bandwidth() / 2)
+                .attr('y', 12)
+                .attr('text-anchor', 'middle')
+                .attr('fill', '#aaa')
+                .attr('font-size', 10)
+                .text(d => d % 3 === 0 ? `${d}:00` : '');
+
+            // Y axis labels
+            g.append('g')
+                .attr('transform', 'translate(-10,0)')
+                .selectAll('text')
+                .data(days)
+                .join('text')
+                .attr('x', 0)
+                .attr('y', (d, i) => yScale(i) + yScale.bandwidth() / 2)
+                .attr('dy', '0.35em')
+                .attr('text-anchor', 'end')
+                .attr('fill', '#aaa')
+                .attr('font-size', 11)
+                .text(d => d);
+
+            // Legend
+            const legendWidth = 200;
+            const legendHeight = 10;
+            const legendX = (24 * cellSize - legendWidth) / 2;
+
+            const legendScale = d3.scaleLinear()
+                .domain([0, maxCount])
+                .range([0, legendWidth]);
+
+            const legendAxis = d3.axisBottom(legendScale)
+                .ticks(5)
+                .tickFormat(d3.format('d'));
+
+            const defs = svg.append('defs');
+            const gradient = defs.append('linearGradient')
+                .attr('id', 'heatmap-gradient');
+
+            gradient.selectAll('stop')
+                .data(d3.range(0, 1.1, 0.1))
+                .join('stop')
+                .attr('offset', d => d * 100 + '%')
+                .attr('stop-color', d => heatmapColors(d * maxCount));
+
+            const legend = g.append('g')
+                .attr('transform', `translate(${legendX},${7 * cellSize + 30})`);
+
+            legend.append('rect')
+                .attr('width', legendWidth)
+                .attr('height', legendHeight)
+                .attr('rx', 3)
+                .style('fill', 'url(#heatmap-gradient)');
+
+            legend.append('g')
+                .attr('transform', `translate(0,${legendHeight})`)
+                .call(legendAxis)
+                .select('.domain').remove();
+        }
+
+        function renderHourlyChart(data) {
+            const margin = { top: 20, right: 20, bottom: 40, left: 50 };
+            const width = 400 - margin.left - margin.right;
+            const height = 250 - margin.top - margin.bottom;
+
+            const svg = d3.select('#hourly-chart')
+                .append('svg')
+                .attr('width', width + margin.left + margin.right)
+                .attr('height', height + margin.top + margin.bottom);
+
+            const g = svg.append('g')
+                .attr('transform', `translate(${margin.left},${margin.top})`);
+
+            // Fill missing hours with 0
+            const fullData = d3.range(24).map(hour => {
+                const existing = data.find(d => d.hour === hour);
+                return { hour, count: existing ? existing.count : 0 };
+            });
+
+            const xScale = d3.scaleBand()
+                .domain(d3.range(24))
+                .range([0, width])
+                .padding(0.2);
+
+            const yScale = d3.scaleLinear()
+                .domain([0, d3.max(fullData, d => d.count)])
+                .nice()
+                .range([height, 0]);
+
+            // Bars
+            g.selectAll('rect')
+                .data(fullData)
+                .join('rect')
+                .attr('x', d => xScale(d.hour))
+                .attr('y', d => yScale(d.count))
+                .attr('width', xScale.bandwidth())
+                .attr('height', d => height - yScale(d.count))
+                .attr('fill', barColor)
+                .attr('rx', 2)
+                .on('mouseover', function(event, d) {
+                    d3.select(this).attr('fill', barColorHover);
+                    tooltip.style('opacity', 1)
+                        .html(`<strong>${d.hour}:00 - ${d.hour}:59</strong><br>
+                               <span class="value">${d.count}</span> messages`)
+                        .style('left', (event.pageX + 10) + 'px')
+                        .style('top', (event.pageY - 10) + 'px');
+                })
+                .on('mouseout', function() {
+                    d3.select(this).attr('fill', barColor);
+                    tooltip.style('opacity', 0);
+                });
+
+            // X axis
+            g.append('g')
+                .attr('class', 'axis')
+                .attr('transform', `translate(0,${height})`)
+                .call(d3.axisBottom(xScale).tickValues(d3.range(0, 24, 3)).tickFormat(d => `${d}h`));
+
+            // Y axis
+            g.append('g')
+                .attr('class', 'axis')
+                .call(d3.axisLeft(yScale).ticks(5));
+        }
+
+        function renderDailyChart(data) {
+            const margin = { top: 20, right: 20, bottom: 40, left: 50 };
+            const width = 400 - margin.left - margin.right;
+            const height = 250 - margin.top - margin.bottom;
+
+            const svg = d3.select('#daily-chart')
+                .append('svg')
+                .attr('width', width + margin.left + margin.right)
+                .attr('height', height + margin.top + margin.bottom);
+
+            const g = svg.append('g')
+                .attr('transform', `translate(${margin.left},${margin.top})`);
+
+            const xScale = d3.scaleBand()
+                .domain(d3.range(7))
+                .range([0, width])
+                .padding(0.3);
+
+            const yScale = d3.scaleLinear()
+                .domain([0, d3.max(data, d => d.count)])
+                .nice()
+                .range([height, 0]);
+
+            // Bars
+            g.selectAll('rect')
+                .data(data)
+                .join('rect')
+                .attr('x', d => xScale(d.day))
+                .attr('y', d => yScale(d.count))
+                .attr('width', xScale.bandwidth())
+                .attr('height', d => height - yScale(d.count))
+                .attr('fill', (d, i) => i < 5 ? barColor : '#7b2cbf')
+                .attr('rx', 4)
+                .on('mouseover', function(event, d) {
+                    d3.select(this).attr('opacity', 0.8);
+                    tooltip.style('opacity', 1)
+                        .html(`<strong>${daysFull[d.day]}</strong><br>
+                               <span class="value">${d.count}</span> messages`)
+                        .style('left', (event.pageX + 10) + 'px')
+                        .style('top', (event.pageY - 10) + 'px');
+                })
+                .on('mouseout', function(event, d) {
+                    d3.select(this).attr('opacity', 1);
+                    tooltip.style('opacity', 0);
+                });
+
+            // X axis
+            g.append('g')
+                .attr('class', 'axis')
+                .attr('transform', `translate(0,${height})`)
+                .call(d3.axisBottom(xScale).tickFormat(i => days[i]));
+
+            // Y axis
+            g.append('g')
+                .attr('class', 'axis')
+                .call(d3.axisLeft(yScale).ticks(5));
+
+            // Legend
+            const legend = svg.append('g')
+                .attr('transform', `translate(${margin.left + width - 120},${margin.top})`);
+
+            legend.append('rect').attr('width', 12).attr('height', 12).attr('fill', barColor).attr('rx', 2);
+            legend.append('text').attr('x', 18).attr('y', 10).attr('fill', '#aaa').attr('font-size', 11).text('Weekday');
+
+            legend.append('rect').attr('y', 18).attr('width', 12).attr('height', 12).attr('fill', '#7b2cbf').attr('rx', 2);
+            legend.append('text').attr('x', 18).attr('y', 28).attr('fill', '#aaa').attr('font-size', 11).text('Weekend');
+        }
+
+        function renderTimeline(data) {
+            const margin = { top: 20, right: 30, bottom: 50, left: 60 };
+            const width = 900 - margin.left - margin.right;
+            const height = 280 - margin.top - margin.bottom;
+
+            const svg = d3.select('#timeline-chart')
+                .append('svg')
+                .attr('width', width + margin.left + margin.right)
+                .attr('height', height + margin.top + margin.bottom);
+
+            const g = svg.append('g')
+                .attr('transform', `translate(${margin.left},${margin.top})`);
+
+            const xScale = d3.scaleTime()
+                .domain(d3.extent(data, d => d.date))
+                .range([0, width]);
+
+            const yScale = d3.scaleLinear()
+                .domain([0, d3.max(data, d => d.count)])
+                .nice()
+                .range([height, 0]);
+
+            // Area
+            const area = d3.area()
+                .x(d => xScale(d.date))
+                .y0(height)
+                .y1(d => yScale(d.count))
+                .curve(d3.curveMonotoneX);
+
+            g.append('path')
+                .datum(data)
+                .attr('fill', areaColor)
+                .attr('d', area);
+
+            // Line
+            const line = d3.line()
+                .x(d => xScale(d.date))
+                .y(d => yScale(d.count))
+                .curve(d3.curveMonotoneX);
+
+            g.append('path')
+                .datum(data)
+                .attr('fill', 'none')
+                .attr('stroke', lineColor)
+                .attr('stroke-width', 2)
+                .attr('d', line);
+
+            // Dots
+            g.selectAll('circle')
+                .data(data)
+                .join('circle')
+                .attr('cx', d => xScale(d.date))
+                .attr('cy', d => yScale(d.count))
+                .attr('r', 4)
+                .attr('fill', lineColor)
+                .attr('stroke', '#1a1a2e')
+                .attr('stroke-width', 2)
+                .style('cursor', 'pointer')
+                .on('mouseover', function(event, d) {
+                    d3.select(this).attr('r', 7);
+                    tooltip.style('opacity', 1)
+                        .html(`<strong>${d3.timeFormat('%B %Y')(d.date)}</strong><br>
+                               <span class="value">${d.count}</span> messages`)
+                        .style('left', (event.pageX + 10) + 'px')
+                        .style('top', (event.pageY - 10) + 'px');
+                })
+                .on('mouseout', function() {
+                    d3.select(this).attr('r', 4);
+                    tooltip.style('opacity', 0);
+                });
+
+            // X axis
+            g.append('g')
+                .attr('class', 'axis')
+                .attr('transform', `translate(0,${height})`)
+                .call(d3.axisBottom(xScale).ticks(d3.timeMonth.every(6)).tickFormat(d3.timeFormat('%b %Y')))
+                .selectAll('text')
+                .attr('transform', 'rotate(-45)')
+                .style('text-anchor', 'end');
+
+            // Y axis
+            g.append('g')
+                .attr('class', 'axis')
+                .call(d3.axisLeft(yScale).ticks(5));
+
+            // Y axis label
+            g.append('text')
+                .attr('transform', 'rotate(-90)')
+                .attr('y', -45)
+                .attr('x', -height / 2)
+                .attr('text-anchor', 'middle')
+                .attr('fill', '#888')
+                .attr('font-size', 11)
+                .text('Messages');
+        }
+
+        function renderContributors(data, total) {
+            const margin = { top: 20, right: 100, bottom: 20, left: 180 };
+            const barHeight = 22;
+            const height = data.length * barHeight + margin.top + margin.bottom;
+            const width = 1100 - margin.left - margin.right;
+
+            const svg = d3.select('#contributors-chart')
+                .append('svg')
+                .attr('width', width + margin.left + margin.right)
+                .attr('height', height);
+
+            const g = svg.append('g')
+                .attr('transform', `translate(${margin.left},${margin.top})`);
+
+            const xScale = d3.scaleLinear()
+                .domain([0, d3.max(data, d => d.count)])
+                .range([0, width]);
+
+            const yScale = d3.scaleBand()
+                .domain(data.map(d => d.name))
+                .range([0, data.length * barHeight])
+                .padding(0.2);
+
+            // Color scale based on rank - top 10 get special colors
+            const colorScale = d3.scaleLinear()
+                .domain([0, 9, 10, data.length - 1])
+                .range([barColor, '#00a0cc', '#7b2cbf', '#4a1a6b']);
+
+            // Add rank numbers
+            g.selectAll('.rank-label')
+                .data(data)
+                .join('text')
+                .attr('class', 'rank-label')
+                .attr('x', -175)
+                .attr('y', d => yScale(d.name) + yScale.bandwidth() / 2)
+                .attr('dy', '0.35em')
+                .attr('text-anchor', 'start')
+                .attr('fill', (d, i) => i < 10 ? '#00d4ff' : '#666')
+                .attr('font-size', 11)
+                .attr('font-weight', (d, i) => i < 10 ? 'bold' : 'normal')
+                .text((d, i) => `#${i + 1}`);
+
+            // Bars
+            g.selectAll('rect')
+                .data(data)
+                .join('rect')
+                .attr('x', 0)
+                .attr('y', d => yScale(d.name))
+                .attr('width', d => xScale(d.count))
+                .attr('height', yScale.bandwidth())
+                .attr('fill', (d, i) => i < 10 ? colorScale(i) : colorScale(i))
+                .attr('rx', 3)
+                .attr('opacity', (d, i) => i < 10 ? 1 : 0.7)
+                .on('mouseover', function(event, d) {
+                    d3.select(this).attr('opacity', 1).attr('stroke', '#fff').attr('stroke-width', 1);
+                    const pct = ((d.count / total) * 100).toFixed(1);
+                    const rank = data.findIndex(x => x.name === d.name) + 1;
+                    tooltip.style('opacity', 1)
+                        .html(`<strong>#${rank} ${d.name}</strong><br>
+                               <span class="value">${d.count}</span> messages (${pct}%)`)
+                        .style('left', (event.pageX + 10) + 'px')
+                        .style('top', (event.pageY - 10) + 'px');
+                })
+                .on('mouseout', function(event, d) {
+                    const i = data.findIndex(x => x.name === d.name);
+                    d3.select(this).attr('opacity', i < 10 ? 1 : 0.7).attr('stroke', 'none');
+                    tooltip.style('opacity', 0);
+                });
+
+            // Labels (names)
+            g.selectAll('.name-label')
+                .data(data)
+                .join('text')
+                .attr('class', 'name-label')
+                .attr('x', -10)
+                .attr('y', d => yScale(d.name) + yScale.bandwidth() / 2)
+                .attr('dy', '0.35em')
+                .attr('text-anchor', 'end')
+                .attr('fill', (d, i) => i < 10 ? '#fff' : '#aaa')
+                .attr('font-size', 11)
+                .attr('font-weight', (d, i) => i < 10 ? '600' : 'normal')
+                .text(d => d.name.length > 20 ? d.name.substring(0, 20) + '...' : d.name);
+
+            // Labels (counts)
+            g.selectAll('.count-label')
+                .data(data)
+                .join('text')
+                .attr('class', 'count-label')
+                .attr('x', d => xScale(d.count) + 6)
+                .attr('y', d => yScale(d.name) + yScale.bandwidth() / 2)
+                .attr('dy', '0.35em')
+                .attr('fill', '#888')
+                .attr('font-size', 10)
+                .text(d => `${d.count} (${((d.count / total) * 100).toFixed(1)}%)`);
+
+            // Add divider line after top 10
+            if (data.length > 10) {
+                g.append('line')
+                    .attr('x1', -175)
+                    .attr('x2', width + 80)
+                    .attr('y1', yScale(data[10].name) - 3)
+                    .attr('y2', yScale(data[10].name) - 3)
+                    .attr('stroke', '#444')
+                    .attr('stroke-dasharray', '4,4');
+
+                g.append('text')
+                    .attr('x', width + 80)
+                    .attr('y', yScale(data[10].name) - 8)
+                    .attr('text-anchor', 'end')
+                    .attr('fill', '#666')
+                    .attr('font-size', 9)
+                    .text('Top 10 (70% of messages)');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Data files (keep local, don't share personal data)
+*.csv
+*.txt
+
+# IDE
+.vscode/
+.idea/
+
+# Images (screenshots with personal info)
+img/
