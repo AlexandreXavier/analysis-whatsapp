@@ -288,77 +288,32 @@
             return nameMapping[name] || name;
         }
 
-        // Load and process data
-        d3.csv('../w.csv').then(rawData => {
-            // Filter valid rows (date format YY-MM-DD)
-            const dateRegex = /^\d{2}-\d{2}-\d{2}$/;
-            const data = rawData.filter(d => dateRegex.test(d['date (YYYY-MM-DD)']));
+        // Load aggregated data (precomputed for deployment)
+        d3.json('data/whatsapp-aggregated.json').then(dataset => {
+            const stats = dataset.stats;
+            const hourlyData = dataset.hourly;
+            const dailyData = dataset.daily;
+            const monthlyData = dataset.monthly.map(d => ({
+                ...d,
+                date: d3.timeParse('%Y-%m')(d.month)
+            }));
+            const heatmapData = dataset.heatmap;
+            const contributorData = dataset.contributors;
+            const totalMessages = stats.totalMessages;
 
-            // Parse data
-            const parseDate = d3.timeParse('%y-%m-%d');
-            data.forEach(d => {
-                d.date = parseDate(d['date (YYYY-MM-DD)']);
-                d.time = d['time (hh:mm)'];
-                d.hour = parseInt(d.time.split(':')[0]);
-                d.dayOfWeek = d.date.getDay(); // 0 = Sunday
-                d.dayOfWeekMon = (d.dayOfWeek + 6) % 7; // 0 = Monday
-                d.yearMonth = d3.timeFormat('%Y-%m')(d.date);
-                d.originalName = d.name;
-                d.name = getDisplayName(d.name); // Apply name mapping
-            });
-
-            // Calculate statistics
-            const totalMessages = data.length;
-            const uniqueParticipants = new Set(data.map(d => d.name)).size;
-            const dateExtent = d3.extent(data, d => d.date);
-            const daysSpan = Math.round((dateExtent[1] - dateExtent[0]) / (1000 * 60 * 60 * 24));
-            const activeDays = new Set(data.map(d => d3.timeFormat('%Y-%m-%d')(d.date))).size;
-
-            // Render stats
-            renderStats({
-                totalMessages,
-                uniqueParticipants,
-                daysSpan,
-                activeDays,
-                avgPerDay: (totalMessages / activeDays).toFixed(1)
-            });
-
-            // Aggregate data for charts
-            const hourlyData = d3.rollups(data, v => v.length, d => d.hour)
-                .map(([hour, count]) => ({ hour, count }))
-                .sort((a, b) => a.hour - b.hour);
-
-            const dailyData = d3.rollups(data, v => v.length, d => d.dayOfWeekMon)
-                .map(([day, count]) => ({ day, count }))
-                .sort((a, b) => a.day - b.day);
-
-            const monthlyData = d3.rollups(data, v => v.length, d => d.yearMonth)
-                .map(([month, count]) => ({ month, count, date: d3.timeParse('%Y-%m')(month) }))
-                .sort((a, b) => a.date - b.date);
-
-            const heatmapData = d3.rollups(data, v => v.length, d => d.dayOfWeekMon, d => d.hour)
-                .flatMap(([day, hours]) =>
-                    hours.map(([hour, count]) => ({ day, hour, count }))
-                );
-
-            const contributorData = d3.rollups(data, v => v.length, d => d.name)
-                .map(([name, count]) => ({ name, count }))
-                .sort((a, b) => b.count - a.count); // Show ALL participants
-
-            // Render charts
+            renderStats(stats);
             renderHeatmap(heatmapData);
             renderHourlyChart(hourlyData);
             renderDailyChart(dailyData);
             renderTimeline(monthlyData);
             renderContributors(contributorData, totalMessages);
-
         }).catch(err => {
             console.error('Erro ao carregar os dados:', err);
             document.querySelector('.dashboard').innerHTML = `
                 <div class="chart-container full-width">
                     <div class="loading">
-                        <p>Erro ao carregar os dados. Confirme que tem um servidor local a correr.</p>
-                        <p style="margin-top: 10px; font-size: 0.8em;">Comando: python -m http.server 8000</p>
+                        <p>Erro ao carregar os dados. Confirme que o ficheiro data/whatsapp-aggregated.json existe.</p>
+                        <p style="margin-top: 10px; font-size: 0.8em;">Execute: python scripts/generate_aggregated_data.py</p>
                     </div>
                 </div>
             `;
