@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Padrões de Atividade no WhatsApp - Grupo Cedros</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-cloud@1.2.5/build/d3.layout.cloud.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -165,6 +166,22 @@
             color: #888;
         }
 
+        #wordcloud {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 350px;
+        }
+
+        #wordcloud text {
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        #wordcloud text:hover {
+            opacity: 0.7;
+        }
+
         @media (max-width: 900px) {
             .dashboard {
                 grid-template-columns: 1fr;
@@ -188,6 +205,12 @@
             <div class="chart-title">📅 Mapa de Calor: Hora × Dia da Semana</div>
             <div class="chart-description">Cores mais escuras indicam mais mensagens. Passe com o rato para ver detalhes.</div>
             <div id="heatmap"></div>
+        </div>
+
+        <div class="chart-container full-width">
+            <div class="chart-title">💬 Palavras Mais Frequentes</div>
+            <div class="chart-description">Nuvem de palavras baseada na frequência de menções no grupo</div>
+            <div id="wordcloud"></div>
         </div>
 
         <div class="chart-container">
@@ -299,10 +322,12 @@
             }));
             const heatmapData = dataset.heatmap;
             const contributorData = dataset.contributors;
+            const wordfreqData = dataset.wordfreq || [];
             const totalMessages = stats.totalMessages;
 
             renderStats(stats);
             renderHeatmap(heatmapData);
+            renderWordCloud(wordfreqData);
             renderHourlyChart(hourlyData);
             renderDailyChart(dailyData);
             renderTimeline(monthlyData);
@@ -470,6 +495,76 @@
                 .attr('transform', `translate(0,${legendHeight})`)
                 .call(legendAxis)
                 .select('.domain').remove();
+        }
+
+        function renderWordCloud(data) {
+            if (!data || data.length === 0) {
+                d3.select('#wordcloud').html('<p style="color: #888; text-align: center;">Dados de palavras não disponíveis. Execute o script de agregação.</p>');
+                return;
+            }
+
+            const container = document.getElementById('wordcloud');
+            const width = Math.min(900, container.clientWidth || 900);
+            const height = 350;
+
+            // Scale for font size based on word frequency
+            const minCount = d3.min(data, d => d.count);
+            const maxCount = d3.max(data, d => d.count);
+            const fontScale = d3.scaleSqrt()
+                .domain([minCount, maxCount])
+                .range([14, 70]);
+
+            // Color scale - gradient from cyan to purple based on frequency
+            const colorScale = d3.scaleSequential()
+                .domain([minCount, maxCount])
+                .interpolator(d3.interpolate('#7b2cbf', '#00d4ff'));
+
+            // Create word cloud layout
+            const layout = d3.layout.cloud()
+                .size([width, height])
+                .words(data.map(d => ({
+                    text: d.word,
+                    size: fontScale(d.count),
+                    count: d.count
+                })))
+                .padding(5)
+                .rotate(() => (Math.random() > 0.7 ? 90 : 0))
+                .font('-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif')
+                .fontSize(d => d.size)
+                .on('end', draw);
+
+            layout.start();
+
+            function draw(words) {
+                const svg = d3.select('#wordcloud')
+                    .append('svg')
+                    .attr('width', width)
+                    .attr('height', height);
+
+                const g = svg.append('g')
+                    .attr('transform', `translate(${width / 2},${height / 2})`);
+
+                g.selectAll('text')
+                    .data(words)
+                    .join('text')
+                    .style('font-size', d => `${d.size}px`)
+                    .style('font-family', '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif')
+                    .style('font-weight', d => d.size > 40 ? '600' : '400')
+                    .style('fill', d => colorScale(d.count))
+                    .attr('text-anchor', 'middle')
+                    .attr('transform', d => `translate(${d.x},${d.y}) rotate(${d.rotate})`)
+                    .text(d => d.text)
+                    .on('mouseover', function(event, d) {
+                        tooltip.style('opacity', 1)
+                            .html(`<strong>${d.text}</strong><br>
+                                   <span class="value">${d.count}</span> ocorrências`)
+                            .style('left', (event.pageX + 10) + 'px')
+                            .style('top', (event.pageY - 10) + 'px');
+                    })
+                    .on('mouseout', function() {
+                        tooltip.style('opacity', 0);
+                    });
+            }
         }
 
         function renderHourlyChart(data) {
@@ -757,8 +852,9 @@
                     d3.select(this).attr('opacity', 1).attr('stroke', '#fff').attr('stroke-width', 1);
                     const pct = ((d.count / total) * 100).toFixed(1);
                     const rank = data.findIndex(x => x.name === d.name) + 1;
+                    const displayName = getDisplayName(d.name);
                     tooltip.style('opacity', 1)
-                        .html(`<strong>#${rank} ${d.name}</strong><br>
+                        .html(`<strong>#${rank} ${displayName}</strong><br>
                                <span class="value">${d.count}</span> mensagens (${pct}%)`)
                         .style('left', (event.pageX + 10) + 'px')
                         .style('top', (event.pageY - 10) + 'px');
@@ -781,7 +877,10 @@
                 .attr('fill', (d, i) => i < 10 ? '#fff' : '#aaa')
                 .attr('font-size', 11)
                 .attr('font-weight', (d, i) => i < 10 ? '600' : 'normal')
-                .text(d => d.name.length > 20 ? d.name.substring(0, 20) + '...' : d.name);
+                .text(d => {
+                    const displayName = getDisplayName(d.name);
+                    return displayName.length > 20 ? displayName.substring(0, 20) + '...' : displayName;
+                });
 
             // Labels (counts)
             g.selectAll('.count-label')

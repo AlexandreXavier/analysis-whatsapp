@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-01-20T21:35:37Z",
+  "generatedAt": "2026-01-21T05:05:26Z",
   "stats": {
     "totalMessages": 9470,
     "uniqueParticipants": 40,
@@ -1295,6 +1295,408 @@
     {
       "name": "+351 966 237 760",
       "count": 1
+    }
+  ],
+  "wordfreq": [
+    {
+      "word": "abraço",
+      "count": 1501
+    },
+    {
+      "word": "parabéns",
+      "count": 1292
+    },
+    {
+      "word": "grande",
+      "count": 942
+    },
+    {
+      "word": "muitos",
+      "count": 654
+    },
+    {
+      "word": "aguardar",
+      "count": 399
+    },
+    {
+      "word": "miguel",
+      "count": 311
+    },
+    {
+      "word": "pedro",
+      "count": 276
+    },
+    {
+      "word": "obrigado",
+      "count": 256
+    },
+    {
+      "word": "bom",
+      "count": 249
+    },
+    {
+      "word": "rui",
+      "count": 220
+    },
+    {
+      "word": "forte",
+      "count": 191
+    },
+    {
+      "word": "gonçalo",
+      "count": 189
+    },
+    {
+      "word": "nuno",
+      "count": 188
+    },
+    {
+      "word": "vou",
+      "count": 141
+    },
+    {
+      "word": "filipe",
+      "count": 129
+    },
+    {
+      "word": "ver",
+      "count": 128
+    },
+    {
+      "word": "rodrigo",
+      "count": 123
+    },
+    {
+      "word": "estou",
+      "count": 122
+    },
+    {
+      "word": "amigos",
+      "count": 115
+    },
+    {
+      "word": "tiago",
+      "count": 115
+    },
+    {
+      "word": "tenho",
+      "count": 109
+    },
+    {
+      "word": "toko",
+      "count": 108
+    },
+    {
+      "word": "chega",
+      "count": 102
+    },
+    {
+      "word": "boa",
+      "count": 100
+    },
+    {
+      "word": "grupo",
+      "count": 97
+    },
+    {
+      "word": "amigo",
+      "count": 93
+    },
+    {
+      "word": "armando",
+      "count": 86
+    },
+    {
+      "word": "claro",
+      "count": 84
+    },
+    {
+      "word": "luís",
+      "count": 80
+    },
+    {
+      "word": "joão",
+      "count": 79
+    },
+    {
+      "word": "melhor",
+      "count": 78
+    },
+    {
+      "word": "mãe",
+      "count": 78
+    },
+    {
+      "word": "jantar",
+      "count": 77
+    },
+    {
+      "word": "dinis",
+      "count": 77
+    },
+    {
+      "word": "natal",
+      "count": 76
+    },
+    {
+      "word": "dizer",
+      "count": 74
+    },
+    {
+      "word": "abc",
+      "count": 73
+    },
+    {
+      "word": "eliminada",
+      "count": 73
+    },
+    {
+      "word": "falar",
+      "count": 73
+    },
+    {
+      "word": "sei",
+      "count": 73
+    },
+    {
+      "word": "temos",
+      "count": 72
+    },
+    {
+      "word": "porto",
+      "count": 72
+    },
+    {
+      "word": "vida",
+      "count": 71
+    },
+    {
+      "word": "dar",
+      "count": 69
+    },
+    {
+      "word": "francisco",
+      "count": 67
+    },
+    {
+      "word": "força",
+      "count": 66
+    },
+    {
+      "word": "portugal",
+      "count": 64
+    },
+    {
+      "word": "sou",
+      "count": 64
+    },
+    {
+      "word": "partido",
+      "count": 64
+    },
+    {
+      "word": "acho",
+      "count": 63
+    },
+    {
+      "word": "pessoas",
+      "count": 63
+    },
+    {
+      "word": "país",
+      "count": 63
+    },
+    {
+      "word": "melhoras",
+      "count": 61
+    },
+    {
+      "word": "feliz",
+      "count": 60
+    },
+    {
+      "word": "vamos",
+      "count": 59
+    },
+    {
+      "word": "parece",
+      "count": 59
+    },
+    {
+      "word": "gente",
+      "count": 58
+    },
+    {
+      "word": "mim",
+      "count": 58
+    },
+    {
+      "word": "turma",
+      "count": 57
+    },
+    {
+      "word": "aniversário",
+      "count": 57
+    },
+    {
+      "word": "abraços",
+      "count": 57
+    },
+    {
+      "word": "carpe",
+      "count": 55
+    },
+    {
+      "word": "diem",
+      "count": 55
+    },
+    {
+      "word": "pena",
+      "count": 55
+    },
+    {
+      "word": "votos",
+      "count": 55
+    },
+    {
+      "word": "casa",
+      "count": 54
+    },
+    {
+      "word": "disse",
+      "count": 52
+    },
+    {
+      "word": "contra",
+      "count": 51
+    },
+    {
+      "word": "malta",
+      "count": 51
+    },
+    {
+      "word": "felicidades",
+      "count": 50
+    },
+    {
+      "word": "carlos",
+      "count": 50
+    },
+    {
+      "word": "ventura",
+      "count": 50
+    },
+    {
+      "word": "cotrim",
+      "count": 50
+    },
+    {
+      "word": "presidente",
+      "count": 49
+    },
+    {
+      "word": "esquerda",
+      "count": 49
+    },
+    {
+      "word": "muita",
+      "count": 48
+    },
+    {
+      "word": "lopo",
+      "count": 48
+    },
+    {
+      "word": "dele",
+      "count": 47
+    },
+    {
+      "word": "tens",
+      "count": 47
+    },
+    {
+      "word": "mundo",
+      "count": 47
+    },
+    {
+      "word": "estamos",
+      "count": 47
+    },
+    {
+      "word": "mendes",
+      "count": 47
+    },
+    {
+      "word": "semana",
+      "count": 46
+    },
+    {
+      "word": "rua",
+      "count": 46
+    },
+    {
+      "word": "dois",
+      "count": 45
+    },
+    {
+      "word": "viva",
+      "count": 45
+    },
+    {
+      "word": "quer",
+      "count": 45
+    },
+    {
+      "word": "família",
+      "count": 45
+    },
+    {
+      "word": "excelente",
+      "count": 45
+    },
+    {
+      "word": "ucrânia",
+      "count": 44
+    },
+    {
+      "word": "jaime",
+      "count": 44
+    },
+    {
+      "word": "costa",
+      "count": 43
+    },
+    {
+      "word": "política",
+      "count": 43
+    },
+    {
+      "word": "fui",
+      "count": 43
+    },
+    {
+      "word": "putin",
+      "count": 42
+    },
+    {
+      "word": "diz",
+      "count": 41
+    },
+    {
+      "word": "direita",
+      "count": 41
+    },
+    {
+      "word": "posso",
+      "count": 41
+    },
+    {
+      "word": "top",
+      "count": 41
+    },
+    {
+      "word": "editada",
+      "count": 41
     }
   ]
 }
