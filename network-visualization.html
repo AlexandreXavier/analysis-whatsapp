@@ -164,7 +164,7 @@
 
         // Load data and create visualization
         d3.json('data/whatsapp-aggregated.json').then(data => {
-            const interactions = data.interactions;
+            const interactions = data.interactions || [];
             const contributors = data.contributors;
 
             // Create nodes from contributors
