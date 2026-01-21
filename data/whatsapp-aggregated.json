@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-01-21T05:05:26Z",
+  "generatedAt": "2026-01-21T07:15:04Z",
   "stats": {
     "totalMessages": 9470,
     "uniqueParticipants": 40,
@@ -1697,6 +1697,883 @@
     {
       "word": "editada",
       "count": 41
+    }
+  ],
+  "interactions": [
+    {
+      "source": "+351 912 551 133",
+      "target": "Colegio Cedros Com Foto Sem Nome",
+      "value": 189
+    },
+    {
+      "source": "+351 912 551 133",
+      "target": "Rui Pedro",
+      "value": 113
+    },
+    {
+      "source": "+351 912 551 133",
+      "target": "+351 938 660 054",
+      "value": 90
+    },
+    {
+      "source": "+351 912 551 133",
+      "target": "+351 915 017 414",
+      "value": 82
+    },
+    {
+      "source": "+351 919 187 448",
+      "target": "Rui Pedro",
+      "value": 79
+    },
+    {
+      "source": "+351 912 551 133",
+      "target": "+351 919 187 448",
+      "value": 64
+    },
+    {
+      "source": "+351 938 660 054",
+      "target": "Rui Pedro",
+      "value": 61
+    },
+    {
+      "source": "+351 912 551 133",
+      "target": "+351 919 643 070",
+      "value": 61
+    },
+    {
+      "source": "+351 912 551 133",
+      "target": "+351 918 744 791",
+      "value": 54
+    },
+    {
+      "source": "+351 919 187 448",
+      "target": "+351 919 643 070",
+      "value": 53
+    },
+    {
+      "source": "+351 915 017 414",
+      "target": "+351 938 660 054",
+      "value": 49
+    },
+    {
+      "source": "+351 915 017 414",
+      "target": "Rui Pedro",
+      "value": 46
+    },
+    {
+      "source": "+351 915 017 414",
+      "target": "+55 69 8115-6915",
+      "value": 45
+    },
+    {
+      "source": "+351 913 250 069",
+      "target": "+61 451 008 998",
+      "value": 43
+    },
+    {
+      "source": "+351 912 551 133",
+      "target": "+61 451 008 998",
+      "value": 42
+    },
+    {
+      "source": "+351 919 643 070",
+      "target": "Rui Pedro",
+      "value": 41
+    },
+    {
+      "source": "Colegio Cedros Com Foto Sem Nome",
+      "target": "Rui Pedro",
+      "value": 40
+    },
+    {
+      "source": "+351 912 551 133",
+      "target": "+351 935 710 386",
+      "value": 39
+    },
+    {
+      "source": "+351 915 017 414",
+      "target": "+351 919 643 070",
+      "value": 38
+    },
+    {
+      "source": "+351 919 643 070",
+      "target": "+351 938 660 054",
+      "value": 35
+    },
+    {
+      "source": "+351 918 744 791",
+      "target": "+351 919 187 448",
+      "value": 28
+    },
+    {
+      "source": "+351 915 017 414",
+      "target": "+61 451 008 998",
+      "value": 28
+    },
+    {
+      "source": "+61 451 008 998",
+      "target": "Rui Pedro",
+      "value": 27
+    },
+    {
+      "source": "+351 912 551 133",
+      "target": "Tiago Burnay",
+      "value": 26
+    },
+    {
+      "source": "+351 918 744 791",
+      "target": "Rui Pedro",
+      "value": 26
+    },
+    {
+      "source": "+351 912 551 133",
+      "target": "+351 936 586 711",
+      "value": 25
+    },
+    {
+      "source": "+351 912 551 133",
+      "target": "+351 932 883 221",
+      "value": 24
+    },
+    {
+      "source": "+351 919 187 448",
+      "target": "+351 935 710 386",
+      "value": 23
+    },
+    {
+      "source": "+351 935 710 386",
+      "target": "Colegio Cedros Com Foto Sem Nome",
+      "value": 22
+    },
+    {
+      "source": "+351 938 660 054",
+      "target": "Colegio Cedros Com Foto Sem Nome",
+      "value": 22
+    },
+    {
+      "source": "+351 912 551 133",
+      "target": "+351 937 036 629",
+      "value": 21
+    },
+    {
+      "source": "+351 936 586 711",
+      "target": "Rui Pedro",
+      "value": 20
+    },
+    {
+      "source": "+351 918 744 791",
+      "target": "+61 451 008 998",
+      "value": 18
+    },
+    {
+      "source": "+351 919 643 070",
+      "target": "+351 935 710 386",
+      "value": 18
+    },
+    {
+      "source": "+351 915 017 414",
+      "target": "+351 918 744 791",
+      "value": 17
+    },
+    {
+      "source": "+351 919 643 070",
+      "target": "+351 937 036 629",
+      "value": 17
+    },
+    {
+      "source": "+351 932 883 221",
+      "target": "Rui Pedro",
+      "value": 17
+    },
+    {
+      "source": "+351 915 017 414",
+      "target": "Tiago Burnay",
+      "value": 16
+    },
+    {
+      "source": "+351 937 036 629",
+      "target": "+351 938 660 054",
+      "value": 16
+    },
+    {
+      "source": "+351 912 551 133",
+      "target": "+55 69 8115-6915",
+      "value": 15
+    },
+    {
+      "source": "+351 919 187 448",
+      "target": "+61 451 008 998",
+      "value": 15
+    },
+    {
+      "source": "+351 937 036 629",
+      "target": "Rui Pedro",
+      "value": 15
+    },
+    {
+      "source": "Rui Pedro",
+      "target": "cedros",
+      "value": 15
+    },
+    {
+      "source": "+351 919 643 070",
+      "target": "Colegio Cedros Com Foto Sem Nome",
+      "value": 15
+    },
+    {
+      "source": "+351 938 660 054",
+      "target": "+61 451 008 998",
+      "value": 13
+    },
+    {
+      "source": "+351 915 017 414",
+      "target": "cedros",
+      "value": 13
+    },
+    {
+      "source": "+351 937 042 033",
+      "target": "+351 938 660 054",
+      "value": 12
+    },
+    {
+      "source": "+351 910 252 930",
+      "target": "+351 938 660 054",
+      "value": 11
+    },
+    {
+      "source": "+351 919 187 448",
+      "target": "+351 938 660 054",
+      "value": 11
+    },
+    {
+      "source": "+351 910 252 930",
+      "target": "+351 919 187 448",
+      "value": 11
+    },
+    {
+      "source": "+351 918 744 791",
+      "target": "+351 938 660 054",
+      "value": 11
+    },
+    {
+      "source": "+351 918 744 791",
+      "target": "+351 936 586 711",
+      "value": 11
+    },
+    {
+      "source": "+351 918 744 791",
+      "target": "Colegio Cedros Com Foto Sem Nome",
+      "value": 11
+    },
+    {
+      "source": "+351 938 660 054",
+      "target": "+351 967 850 292",
+      "value": 10
+    },
+    {
+      "source": "+351 967 850 292",
+      "target": "Rui Pedro",
+      "value": 10
+    },
+    {
+      "source": "+351 910 252 930",
+      "target": "+61 451 008 998",
+      "value": 10
+    },
+    {
+      "source": "+351 918 744 791",
+      "target": "+351 919 643 070",
+      "value": 10
+    },
+    {
+      "source": "+351 935 710 386",
+      "target": "Rui Pedro",
+      "value": 10
+    },
+    {
+      "source": "+351 936 586 711",
+      "target": "Colegio Cedros Com Foto Sem Nome",
+      "value": 10
+    },
+    {
+      "source": "+351 918 744 791",
+      "target": "+351 937 036 629",
+      "value": 9
+    },
+    {
+      "source": "+351 938 660 054",
+      "target": "+55 69 8115-6915",
+      "value": 9
+    },
+    {
+      "source": "+351 910 252 930",
+      "target": "+351 915 017 414",
+      "value": 9
+    },
+    {
+      "source": "+351 918 744 791",
+      "target": "cedros",
+      "value": 9
+    },
+    {
+      "source": "+351 938 660 054",
+      "target": "cedros",
+      "value": 9
+    },
+    {
+      "source": "Rui Pedro",
+      "target": "Tiago Burnay",
+      "value": 9
+    },
+    {
+      "source": "+55 69 8115-6915",
+      "target": "Rui Pedro",
+      "value": 9
+    },
+    {
+      "source": "+351 915 017 414",
+      "target": "+351 937 042 033",
+      "value": 9
+    },
+    {
+      "source": "+351 912 551 133",
+      "target": "+351 913 250 069",
+      "value": 9
+    },
+    {
+      "source": "+351 918 744 791",
+      "target": "+351 967 850 292",
+      "value": 8
+    },
+    {
+      "source": "+351 912 551 133",
+      "target": "+351 967 850 292",
+      "value": 8
+    },
+    {
+      "source": "+351 938 660 054",
+      "target": "Tiago Burnay",
+      "value": 8
+    },
+    {
+      "source": "+351 913 250 069",
+      "target": "+351 937 036 629",
+      "value": 8
+    },
+    {
+      "source": "+351 915 017 414",
+      "target": "+351 919 187 448",
+      "value": 8
+    },
+    {
+      "source": "+351 937 042 033",
+      "target": "Rui Pedro",
+      "value": 8
+    },
+    {
+      "source": "+351 915 017 414",
+      "target": "+351 936 264 750",
+      "value": 8
+    },
+    {
+      "source": "+351 912 518 239",
+      "target": "+351 912 551 133",
+      "value": 8
+    },
+    {
+      "source": "+351 919 643 070",
+      "target": "+351 936 264 750",
+      "value": 8
+    },
+    {
+      "source": "+351 912 551 133",
+      "target": "+351 936 264 750",
+      "value": 7
+    },
+    {
+      "source": "+351 912 551 133",
+      "target": "+351 919 034 686",
+      "value": 7
+    },
+    {
+      "source": "+351 912 551 133",
+      "target": "+351 937 042 033",
+      "value": 7
+    },
+    {
+      "source": "+351 918 744 791",
+      "target": "Tiago Burnay",
+      "value": 7
+    },
+    {
+      "source": "+351 915 017 414",
+      "target": "+351 967 850 292",
+      "value": 7
+    },
+    {
+      "source": "+351 912 551 133",
+      "target": "cedros",
+      "value": 7
+    },
+    {
+      "source": "+351 913 250 069",
+      "target": "Rui Pedro",
+      "value": 7
+    },
+    {
+      "source": "+351 936 264 750",
+      "target": "Rui Pedro",
+      "value": 7
+    },
+    {
+      "source": "+351 919 034 686",
+      "target": "+351 937 036 629",
+      "value": 6
+    },
+    {
+      "source": "+351 910 252 930",
+      "target": "+351 912 551 133",
+      "value": 6
+    },
+    {
+      "source": "+351 938 660 054",
+      "target": "+351 962 006 169",
+      "value": 6
+    },
+    {
+      "source": "Tiago Burnay",
+      "target": "cedros",
+      "value": 6
+    },
+    {
+      "source": "+351 936 264 750",
+      "target": "+351 937 042 033",
+      "value": 6
+    },
+    {
+      "source": "+351 936 264 750",
+      "target": "+351 967 850 292",
+      "value": 6
+    },
+    {
+      "source": "+351 919 643 070",
+      "target": "+351 937 042 033",
+      "value": 6
+    },
+    {
+      "source": "+351 935 710 386",
+      "target": "+351 936 586 711",
+      "value": 6
+    },
+    {
+      "source": "+351 936 586 711",
+      "target": "+351 938 660 054",
+      "value": 6
+    },
+    {
+      "source": "+351 932 883 221",
+      "target": "Colegio Cedros Com Foto Sem Nome",
+      "value": 6
+    },
+    {
+      "source": "+351 919 187 448",
+      "target": "Colegio Cedros Com Foto Sem Nome",
+      "value": 6
+    },
+    {
+      "source": "+61 451 008 998",
+      "target": "Colegio Cedros Com Foto Sem Nome",
+      "value": 6
+    },
+    {
+      "source": "+351 932 883 221",
+      "target": "Tiago Burnay",
+      "value": 5
+    },
+    {
+      "source": "+351 915 017 414",
+      "target": "+351 962 006 169",
+      "value": 5
+    },
+    {
+      "source": "+351 936 264 750",
+      "target": "+351 938 660 054",
+      "value": 5
+    },
+    {
+      "source": "+351 919 385 727",
+      "target": "Rui Pedro",
+      "value": 5
+    },
+    {
+      "source": "+351 919 643 070",
+      "target": "+61 451 008 998",
+      "value": 5
+    },
+    {
+      "source": "+351 915 017 414",
+      "target": "+351 937 036 629",
+      "value": 5
+    },
+    {
+      "source": "+351 919 034 686",
+      "target": "+351 936 264 750",
+      "value": 5
+    },
+    {
+      "source": "+351 915 017 414",
+      "target": "+351 935 710 386",
+      "value": 5
+    },
+    {
+      "source": "+351 918 744 791",
+      "target": "+351 935 710 386",
+      "value": 5
+    },
+    {
+      "source": "+351 919 187 448",
+      "target": "+351 937 036 629",
+      "value": 5
+    },
+    {
+      "source": "+351 938 660 054",
+      "target": "+351 939 871 400",
+      "value": 4
+    },
+    {
+      "source": "+351 936 160 697",
+      "target": "+351 967 850 292",
+      "value": 4
+    },
+    {
+      "source": "+351 962 006 169",
+      "target": "Rui Pedro",
+      "value": 4
+    },
+    {
+      "source": "+351 918 744 791",
+      "target": "+351 936 264 750",
+      "value": 4
+    },
+    {
+      "source": "+351 915 017 414",
+      "target": "+351 932 883 221",
+      "value": 4
+    },
+    {
+      "source": "+351 936 264 750",
+      "target": "+351 937 036 629",
+      "value": 4
+    },
+    {
+      "source": "+351 918 622 903",
+      "target": "+351 919 385 727",
+      "value": 4
+    },
+    {
+      "source": "+351 913 250 069",
+      "target": "cedros",
+      "value": 4
+    },
+    {
+      "source": "+351 937 036 629",
+      "target": "Tiago Burnay",
+      "value": 4
+    },
+    {
+      "source": "Rui Pedro",
+      "target": "Xani",
+      "value": 4
+    },
+    {
+      "source": "+351 912 518 239",
+      "target": "+351 936 264 750",
+      "value": 4
+    },
+    {
+      "source": "+351 913 250 069",
+      "target": "+351 915 017 414",
+      "value": 4
+    },
+    {
+      "source": "+351 913 250 069",
+      "target": "+351 936 264 750",
+      "value": 4
+    },
+    {
+      "source": "+351 919 187 448",
+      "target": "+351 937 042 033",
+      "value": 4
+    },
+    {
+      "source": "+61 451 008 998",
+      "target": "Tiago Burnay",
+      "value": 4
+    },
+    {
+      "source": "+351 936 264 750",
+      "target": "+61 451 008 998",
+      "value": 4
+    },
+    {
+      "source": "+351 918 622 903",
+      "target": "+351 936 160 697",
+      "value": 4
+    },
+    {
+      "source": "+351 937 036 629",
+      "target": "+351 937 042 033",
+      "value": 4
+    },
+    {
+      "source": "+351 912 551 133",
+      "target": "+351 918 622 903",
+      "value": 4
+    },
+    {
+      "source": "+351 918 622 903",
+      "target": "+351 937 036 629",
+      "value": 4
+    },
+    {
+      "source": "+351 939 871 400",
+      "target": "Tiago Burnay",
+      "value": 4
+    },
+    {
+      "source": "+351 913 250 069",
+      "target": "Tiago Burnay",
+      "value": 4
+    },
+    {
+      "source": "+351 913 250 069",
+      "target": "+351 918 744 791",
+      "value": 4
+    },
+    {
+      "source": "+351 937 042 033",
+      "target": "+61 451 008 998",
+      "value": 4
+    },
+    {
+      "source": "+351 918 744 791",
+      "target": "Xani",
+      "value": 4
+    },
+    {
+      "source": "+351 919 385 727",
+      "target": "+351 936 264 750",
+      "value": 4
+    },
+    {
+      "source": "+351 919 187 448",
+      "target": "+351 936 586 711",
+      "value": 4
+    },
+    {
+      "source": "Colegio Cedros Com Foto Sem Nome",
+      "target": "Tiago Burnay",
+      "value": 4
+    },
+    {
+      "source": "+351 936 264 750",
+      "target": "Colegio Cedros Com Foto Sem Nome",
+      "value": 4
+    },
+    {
+      "source": "+351 967 850 292",
+      "target": "Colegio Cedros Com Foto Sem Nome",
+      "value": 4
+    },
+    {
+      "source": "+351 912 551 133",
+      "target": "+351 939 084 981",
+      "value": 4
+    },
+    {
+      "source": "+351 910 252 930",
+      "target": "Rui Pedro",
+      "value": 3
+    },
+    {
+      "source": "+351 937 042 033",
+      "target": "cedros",
+      "value": 3
+    },
+    {
+      "source": "+351 912 518 239",
+      "target": "+351 918 622 903",
+      "value": 3
+    },
+    {
+      "source": "+351 912 518 239",
+      "target": "+351 915 017 414",
+      "value": 3
+    },
+    {
+      "source": "+351 912 518 239",
+      "target": "+351 937 036 629",
+      "value": 3
+    },
+    {
+      "source": "+351 912 518 239",
+      "target": "+351 918 744 791",
+      "value": 3
+    },
+    {
+      "source": "+351 937 042 033",
+      "target": "Tiago Burnay",
+      "value": 3
+    },
+    {
+      "source": "+351 936 264 750",
+      "target": "+351 962 006 169",
+      "value": 3
+    },
+    {
+      "source": "+351 936 264 750",
+      "target": "+351 939 871 400",
+      "value": 3
+    },
+    {
+      "source": "+351 918 622 903",
+      "target": "+351 938 660 054",
+      "value": 3
+    },
+    {
+      "source": "+351 919 643 070",
+      "target": "Tiago Burnay",
+      "value": 3
+    },
+    {
+      "source": "+351 937 036 629",
+      "target": "+55 69 8115-6915",
+      "value": 3
+    },
+    {
+      "source": "+351 919 034 686",
+      "target": "+351 919 187 448",
+      "value": 3
+    },
+    {
+      "source": "+351 912 518 239",
+      "target": "+351 913 250 069",
+      "value": 3
+    },
+    {
+      "source": "+351 915 017 414",
+      "target": "Xani",
+      "value": 3
+    },
+    {
+      "source": "+351 967 850 292",
+      "target": "Tiago Burnay",
+      "value": 3
+    },
+    {
+      "source": "+351 937 036 629",
+      "target": "+61 451 008 998",
+      "value": 3
+    },
+    {
+      "source": "+351 919 385 727",
+      "target": "+351 939 871 400",
+      "value": 3
+    },
+    {
+      "source": "+351 919 643 070",
+      "target": "+351 967 850 292",
+      "value": 3
+    },
+    {
+      "source": "+351 918 622 903",
+      "target": "Rui Pedro",
+      "value": 3
+    },
+    {
+      "source": "+351 913 250 069",
+      "target": "+351 919 643 070",
+      "value": 3
+    },
+    {
+      "source": "+351 919 385 727",
+      "target": "cedros",
+      "value": 3
+    },
+    {
+      "source": "+351 918 744 791",
+      "target": "+351 962 006 169",
+      "value": 3
+    },
+    {
+      "source": "+351 915 017 414",
+      "target": "+351 939 871 400",
+      "value": 3
+    },
+    {
+      "source": "+351 919 643 070",
+      "target": "+351 962 006 169",
+      "value": 3
+    },
+    {
+      "source": "+351 936 586 711",
+      "target": "+351 937 042 033",
+      "value": 3
+    },
+    {
+      "source": "+351 913 250 069",
+      "target": "+351 937 042 033",
+      "value": 3
+    },
+    {
+      "source": "+351 936 586 711",
+      "target": "+351 937 036 629",
+      "value": 3
+    },
+    {
+      "source": "+351 918 744 791",
+      "target": "+351 919 034 686",
+      "value": 3
+    },
+    {
+      "source": "+351 919 385 727",
+      "target": "Tiago Burnay",
+      "value": 3
+    },
+    {
+      "source": "+351 918 622 903",
+      "target": "+351 918 744 791",
+      "value": 3
+    },
+    {
+      "source": "+351 919 034 686",
+      "target": "+351 935 710 386",
+      "value": 3
+    },
+    {
+      "source": "+351 939 871 400",
+      "target": "Rui Pedro",
+      "value": 3
+    },
+    {
+      "source": "+351 967 850 292",
+      "target": "+61 451 008 998",
+      "value": 3
+    },
+    {
+      "source": "+351 919 034 686",
+      "target": "+351 919 643 070",
+      "value": 3
+    },
+    {
+      "source": "+351 936 586 711",
+      "target": "Tiago Burnay",
+      "value": 3
+    },
+    {
+      "source": "+351 937 036 629",
+      "target": "Colegio Cedros Com Foto Sem Nome",
+      "value": 3
     }
   ]
 }

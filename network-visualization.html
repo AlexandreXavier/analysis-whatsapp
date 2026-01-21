@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rede de Ligações - Grupo Cedros</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #eee;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px;
+            font-size: 1.8rem;
+            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #888;
+            margin-bottom: 10px;
+            font-size: 0.85rem;
+        }
+
+        #graph {
+            width: 100%;
+            height: calc(100vh - 100px);
+        }
+
+        .link {
+            stroke: #444;
+            stroke-opacity: 0.6;
+        }
+
+        .node circle {
+            stroke: #fff;
+            stroke-width: 1.5px;
+            cursor: grab;
+        }
+
+        .node circle:hover {
+            stroke-width: 3px;
+        }
+
+        .node text {
+            font-size: 10px;
+            fill: #ccc;
+            pointer-events: none;
+            text-anchor: middle;
+        }
+
+        .tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid #00d4ff;
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 13px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: 100;
+        }
+
+        .tooltip .name {
+            font-weight: bold;
+            color: #00d4ff;
+        }
+
+        .back-link {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            color: #00d4ff;
+            text-decoration: none;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .back-link:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <a href="activity-visualization.html" class="back-link">&larr; Voltar ao Dashboard</a>
+    <h1>Rede de Ligações entre Participantes</h1>
+    <p class="subtitle">Baseado nas interações consecutivas (janela de 5 minutos)</p>
+    <div id="graph"></div>
+    <div class="tooltip" id="tooltip"></div>
+
+    <script>
+        // Phone number to name mapping
+        const nameMapping = {
+            '+55 69 8115-6915': 'Antonio Carlos',
+            '+61 451 008 998': 'Armando Teixeira-Pinto',
+            '+351 935 710 386': 'Dinis Sottomayor',
+            '+351 913 250 069': 'Filipe Cameira',
+            '+351 939 434 275': 'Filipe Sousa Pinto',
+            '+351 937 042 033': 'Filipe Quinta',
+            '+351 918 622 903': 'Francisco Fonseca',
+            '+351 962 533 908': 'Gabriel Campos',
+            '+351 930 489 882': 'Gonçalo Oliveira',
+            '+351 966 933 582': 'Gustavo Sousa',
+            '+351 912 518 239': 'JAC',
+            '+351 919 385 727': 'João Fleming',
+            '+351 966 649 659': 'João Pedro',
+            '+351 939 084 981': 'Jose',
+            '+351 936 264 750': 'Jose Pedro',
+            '+351 932 883 221': 'Lopo Vaz de São Payo',
+            '+351 918 744 791': 'Luis Gagliardini Graça',
+            '+351 912 551 133': 'Miguel MC',
+            '+351 937 036 629': 'Miguel Pereira',
+            '+351 936 160 697': 'Miguel Rocha Reis',
+            '+351 967 850 292': 'Nlaranjo',
+            '+351 966 237 760': 'Nuno',
+            '+351 963 314 707': 'Nuno Brito e Faro',
+            '+351 936 586 711': 'Nuno Motta',
+            '+351 919 034 686': 'Nuno VC',
+            '+351 962 006 169': 'Pedro Barbosa',
+            '+351 939 871 400': 'Pedro Silva',
+            '+351 938 660 054': 'Ricardo Pereira',
+            '+351 919 187 448': 'Rodrigo Adão da Fonseca',
+            '+351 919 241 492': 'Rodrigo Menéres',
+            '+351 919 643 070': 'Toko',
+            '+351 915 017 414': 'Gonçalo',
+            '+351 910 252 930': 'Membro 910',
+            '+351 934 907 353': 'Membro 934',
+            'Colegio Cedros Com Foto Sem Nome': 'Cedros (Foto)',
+            'Colegio Cedros Com Foto S': 'Cedros (Foto)',
+            'Colegio Cedros Sem Foto e Nome': 'Cedros (Anon)',
+            'Colegio Cedros Sem Foto Sem Nome Com': 'Cedros (Anon2)',
+            'Joao Pedro Craveiro (Cedros)': 'João Pedro Craveiro',
+            'Xani': 'Alexandre Xavier'
+        };
+
+        function getDisplayName(name) {
+            return nameMapping[name] || name;
+        }
+
+        function getShortName(name) {
+            const display = getDisplayName(name);
+            // Get first name only for labels
+            const parts = display.split(' ');
+            return parts[0];
+        }
+
+        const tooltip = d3.select('#tooltip');
+
+        // Load data and create visualization
+        d3.json('data/whatsapp-aggregated.json').then(data => {
+            const interactions = data.interactions;
+            const contributors = data.contributors;
+
+            // Create nodes from contributors
+            const nodeMap = new Map();
+            contributors.forEach(c => {
+                nodeMap.set(c.name, {
+                    id: c.name,
+                    count: c.count
+                });
+            });
+
+            // Create links from interactions
+            const links = interactions.map(i => ({
+                source: i.source,
+                target: i.target,
+                value: i.value
+            }));
+
+            // Only include nodes that have interactions
+            const connectedNodes = new Set();
+            links.forEach(l => {
+                connectedNodes.add(l.source);
+                connectedNodes.add(l.target);
+            });
+
+            const nodes = Array.from(connectedNodes).map(id => ({
+                id,
+                count: nodeMap.get(id)?.count || 0
+            }));
+
+            createGraph({ nodes, links });
+        });
+
+        function createGraph(data) {
+            const container = document.getElementById('graph');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+
+            // Scale for node size based on message count
+            const nodeScale = d3.scaleSqrt()
+                .domain([0, d3.max(data.nodes, d => d.count)])
+                .range([5, 25]);
+
+            // Scale for link width
+            const linkScale = d3.scaleSqrt()
+                .domain([0, d3.max(data.links, d => d.value)])
+                .range([1, 8]);
+
+            // Color scale for nodes
+            const colorScale = d3.scaleSequential()
+                .domain([0, d3.max(data.nodes, d => d.count)])
+                .interpolator(d3.interpolate('#7b2cbf', '#00d4ff'));
+
+            // Create SVG
+            const svg = d3.select('#graph')
+                .append('svg')
+                .attr('width', width)
+                .attr('height', height);
+
+            // Create simulation
+            const simulation = d3.forceSimulation(data.nodes)
+                .force('link', d3.forceLink(data.links)
+                    .id(d => d.id)
+                    .distance(100))
+                .force('charge', d3.forceManyBody()
+                    .strength(-300))
+                .force('center', d3.forceCenter(width / 2, height / 2))
+                .force('collision', d3.forceCollide()
+                    .radius(d => nodeScale(d.count) + 20));
+
+            // Create links
+            const link = svg.append('g')
+                .selectAll('line')
+                .data(data.links)
+                .join('line')
+                .attr('class', 'link')
+                .attr('stroke-width', d => linkScale(d.value));
+
+            // Create node groups
+            const node = svg.append('g')
+                .selectAll('g')
+                .data(data.nodes)
+                .join('g')
+                .attr('class', 'node')
+                .call(drag(simulation));
+
+            // Add circles to nodes
+            node.append('circle')
+                .attr('r', d => nodeScale(d.count))
+                .attr('fill', d => colorScale(d.count))
+                .on('mouseover', function(event, d) {
+                    d3.select(this).attr('stroke-width', 3);
+                    tooltip.style('opacity', 1)
+                        .html(`<span class="name">${getDisplayName(d.id)}</span><br>
+                               ${d.count} mensagens`)
+                        .style('left', (event.pageX + 15) + 'px')
+                        .style('top', (event.pageY - 10) + 'px');
+                })
+                .on('mouseout', function() {
+                    d3.select(this).attr('stroke-width', 1.5);
+                    tooltip.style('opacity', 0);
+                });
+
+            // Add labels above nodes
+            node.append('text')
+                .attr('dy', d => -nodeScale(d.count) - 5)
+                .text(d => getShortName(d.id));
+
+            // Update positions on tick
+            simulation.on('tick', () => {
+                link
+                    .attr('x1', d => d.source.x)
+                    .attr('y1', d => d.source.y)
+                    .attr('x2', d => d.target.x)
+                    .attr('y2', d => d.target.y);
+
+                node.attr('transform', d => `translate(${d.x},${d.y})`);
+            });
+        }
+
+        // Drag behavior
+        function drag(simulation) {
+            function dragstarted(event) {
+                if (!event.active) simulation.alphaTarget(0.3).restart();
+                event.subject.fx = event.subject.x;
+                event.subject.fy = event.subject.y;
+            }
+
+            function dragged(event) {
+                event.subject.fx = event.x;
+                event.subject.fy = event.y;
+            }
+
+            function dragended(event) {
+                if (!event.active) simulation.alphaTarget(0);
+                event.subject.fx = null;
+                event.subject.fy = null;
+            }
+
+            return d3.drag()
+                .on('start', dragstarted)
+                .on('drag', dragged)
+                .on('end', dragended);
+        }
+    </script>
+</body>
+</html>
