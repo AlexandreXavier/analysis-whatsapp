@@ -182,6 +182,23 @@
             opacity: 0.7;
         }
 
+        .nav-button {
+            display: inline-block;
+            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 24px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.4);
+        }
+
         @media (max-width: 900px) {
             .dashboard {
                 grid-template-columns: 1fr;
@@ -195,6 +212,7 @@
 <body>
     <h1>Padrões de Atividade no WhatsApp</h1>
     <p class="subtitle">Grupo de Antigos Alunos do Cedros • "A nossa turma" • Fev 2022 - Jan 2026</p>
+    
 
     <div class="dashboard">
         <div class="chart-container full-width">
@@ -235,6 +253,7 @@
             <div class="chart-title">👥 Todos os Participantes (40 membros)</div>
             <div class="chart-description">Ranking completo por número de mensagens</div>
             <div id="contributors-chart"></div>
+            <p class="subtitle"><a href="network-visualization.html" class="nav-button">Ligações dentro do Grupo &rarr;</a></p>
         </div>
     </div>
 

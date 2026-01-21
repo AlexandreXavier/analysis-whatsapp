@@ -168,17 +168,58 @@ def parse_row(row: dict[str, str]) -> dict[str, object] | None:
     except (TypeError, ValueError):
         return None
 
+    # Parse full datetime for interaction analysis
+    dt = None
+    if ":" in time_str:
+        try:
+            dt = datetime.strptime(f"{date_str} {time_str}", "%y-%m-%d %H:%M")
+        except ValueError:
+            pass
+
     name = (row.get("name") or "").strip()
     text = (row.get("text") or "").strip()
 
     return {
         "date": date,
+        "datetime": dt,
         "hour": hour,
         "day_mon": date.weekday(),  # Monday = 0
         "year_month": date.strftime("%Y-%m"),
         "name": name or "Desconhecido",
         "text": text,
     }
+
+
+def build_interactions(parsed_rows: list[dict[str, object]], time_window_minutes: int = 5) -> list[dict[str, object]]:
+    """Build interaction pairs based on consecutive messages within a time window."""
+    from datetime import timedelta
+
+    # Sort by datetime
+    sorted_rows = sorted(
+        [r for r in parsed_rows if r.get("datetime")],
+        key=lambda x: x["datetime"]
+    )
+
+    interaction_counter = Counter()
+    prev_row = None
+
+    for row in sorted_rows:
+        if prev_row is not None:
+            time_diff = (row["datetime"] - prev_row["datetime"]).total_seconds() / 60
+            if time_diff <= time_window_minutes and row["name"] != prev_row["name"]:
+                # Create sorted pair to avoid duplicates (A->B same as B->A)
+                pair = tuple(sorted([prev_row["name"], row["name"]]))
+                interaction_counter[pair] += 1
+        prev_row = row
+
+    # Convert to list of dicts for JSON
+    interactions = [
+        {"source": pair[0], "target": pair[1], "value": count}
+        for pair, count in interaction_counter.most_common()
+        if count >= 3  # Filter out weak connections
+    ]
+
+    return interactions
 
 
 def build_aggregates(parsed_rows: list[dict[str, object]]) -> dict[str, object]:
@@ -193,6 +234,7 @@ def build_aggregates(parsed_rows: list[dict[str, object]]) -> dict[str, object]:
     contributor_counter = Counter()
     word_counter = Counter()
     day_set = set()
+    interactions = build_interactions(parsed_rows)
 
     min_date = parsed_rows[0]["date"]
     max_date = parsed_rows[0]["date"]
@@ -267,6 +309,7 @@ def build_aggregates(parsed_rows: list[dict[str, object]]) -> dict[str, object]:
         "heatmap": heatmap,
         "contributors": contributors,
         "wordfreq": wordfreq,
+        "interactions": interactions,
     }
 
 

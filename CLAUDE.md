@@ -4,7 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-D3.js data visualization dashboard for analyzing WhatsApp group chat data from "A nossa turma" (Cedros school alumni group). Displays interactive charts: heatmap, word cloud, hourly/daily distributions, monthly timeline, and participant rankings.
+D3.js data visualization dashboard for analyzing WhatsApp group chat data from "A nossa turma" (Cedros school alumni group). Two main views:
+- **Activity Dashboard** (`activity-visualization.html`): Heatmap, word cloud, hourly/daily distributions, monthly timeline, participant rankings
+- **Network Graph** (`network-visualization.html`): Force-directed graph showing participant interactions
 
 ## Architecture
 
@@ -13,12 +15,12 @@ w.csv (raw data, gitignored)
     ↓
 scripts/generate_aggregated_data.py
     ↓
-data/whatsapp-aggregated.json (pre-computed stats)
+data/whatsapp-aggregated.json (pre-computed stats + interactions)
     ↓
-activity-visualization.html (D3.js dashboard)
+activity-visualization.html  ←→  network-visualization.html
 ```
 
-The dashboard loads pre-aggregated JSON (not raw CSV) to enable static deployment on Vercel without exposing personal data.
+The dashboards load pre-aggregated JSON (not raw CSV) to enable static deployment on Vercel without exposing personal data.
 
 ## Commands
 
@@ -40,9 +42,10 @@ Push to main branch - Vercel auto-deploys. The `vercel.json` rewrites `/` to `/a
 
 | File | Purpose |
 |------|---------|
-| `activity-visualization.html` | Main dashboard - all D3.js visualizations in single file |
-| `scripts/generate_aggregated_data.py` | Processes raw CSV → JSON with stats, hourly/daily/monthly counts, heatmap data, contributor rankings, word frequencies |
-| `data/whatsapp-aggregated.json` | Pre-computed data consumed by the dashboard |
+| `activity-visualization.html` | Main dashboard with all D3.js charts (single file) |
+| `network-visualization.html` | Force-directed graph of participant interactions |
+| `scripts/generate_aggregated_data.py` | Processes raw CSV → JSON with stats, distributions, heatmap, rankings, word frequencies, and interaction pairs |
+| `data/whatsapp-aggregated.json` | Pre-computed data consumed by both dashboards |
 | `whatsapp_analysis.ipynb` | Jupyter notebook for exploratory analysis |
 | `w.csv` | Raw WhatsApp export (gitignored for privacy) |
 
@@ -50,24 +53,28 @@ Push to main branch - Vercel auto-deploys. The `vercel.json` rewrites `/` to `/a
 
 **Raw CSV** (`w.csv`): `date (YYYY-MM-DD)`, `time (hh:mm)`, `name`, `text`
 - Date format is actually `YY-MM-DD` (e.g., `22-02-18`)
-- Names may be phone numbers (`+351 xxx xxx xxx`) - mapped to real names in `nameMapping` object in the HTML
+- Names may be phone numbers (`+351 xxx xxx xxx`) - mapped to real names via `nameMapping` object (duplicated in both HTML files)
 
 **Aggregated JSON** structure:
 ```javascript
 {
-  stats: { totalMessages, uniqueParticipants, activeDays, avgPerDay },
-  hourly: [{ hour, count }],      // 0-23
-  daily: [{ day, count }],        // 0=Monday, 6=Sunday
-  monthly: [{ month, count }],    // "YYYY-MM" format
+  generatedAt: "2026-01-21T...",
+  stats: { totalMessages, uniqueParticipants, daysSpan, activeDays, avgPerDay },
+  hourly: [{ hour, count }],           // 0-23
+  daily: [{ day, count }],             // 0=Monday, 6=Sunday
+  monthly: [{ month, count }],         // "YYYY-MM" format
   heatmap: [{ day, hour, count }],
   contributors: [{ name, count }],
-  wordfreq: [{ word, count }]     // Top 100 words
+  wordfreq: [{ word, count }],         // Top 100 words
+  interactions: [{ source, target, value }]  // For network graph (min 3 interactions)
 }
 ```
 
+**Interactions**: Computed from consecutive messages within 5-minute windows. Used by `network-visualization.html` for the force-directed graph.
+
 ## D3.js Patterns Used
 
-The dashboard uses D3.js v7 with d3-cloud for word clouds. All charts follow the same pattern:
+Both dashboards use D3.js v7. The activity dashboard also uses d3-cloud for word clouds.
 
 ```javascript
 // Portuguese locale for date formatting
@@ -83,6 +90,12 @@ const margin = { top: 20, right: 20, bottom: 40, left: 50 };
 g.selectAll('rect').data(data).join('rect')
   .attr('x', d => xScale(d.hour))
   .on('mouseover', (event, d) => { tooltip... });
+
+// Force simulation (network graph)
+d3.forceSimulation(nodes)
+  .force('link', d3.forceLink(links).id(d => d.id))
+  .force('charge', d3.forceManyBody().strength(-300))
+  .force('center', d3.forceCenter(width/2, height/2));
 ```
 
 ## Privacy Notes
