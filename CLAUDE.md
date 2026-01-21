@@ -4,91 +4,89 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-D3.js data visualization project for analyzing WhatsApp group chat data from "A nossa turma" (Cedros school reunion group). The project uses D3.js v7 to create interactive visualizations of messaging patterns, participation, and social network dynamics.
+D3.js data visualization dashboard for analyzing WhatsApp group chat data from "A nossa turma" (Cedros school alumni group). Displays interactive charts: heatmap, word cloud, hourly/daily distributions, monthly timeline, and participant rankings.
 
-## Data Source
+## Architecture
 
-- **Location**: `../w.csv` (parent directory)
-- **Format**: CSV with columns: `date (YYYY-MM-DD)`, `time (hh:mm)`, `name`, `text`
-- **Content**: Portuguese-language WhatsApp messages from a school reunion group
-- **Size**: ~950KB, spanning from February 2022 onwards
-- **Notes**:
-  - Some senders identified by phone number (e.g., `+351 xxx xxx xxx`), others by name
-  - Messages may contain `<Ficheiro não revelado>` for unrevealed media files
-  - Text encoding: UTF-8 with Portuguese characters
-
-## Development Setup
-
-### Option 1: CDN (Quick Start)
-```html
-<script src="https://d3js.org/d3.v7.min.js"></script>
+```
+w.csv (raw data, gitignored)
+    ↓
+scripts/generate_aggregated_data.py
+    ↓
+data/whatsapp-aggregated.json (pre-computed stats)
+    ↓
+activity-visualization.html (D3.js dashboard)
 ```
 
-### Option 2: npm
+The dashboard loads pre-aggregated JSON (not raw CSV) to enable static deployment on Vercel without exposing personal data.
+
+## Commands
+
+### Regenerate aggregated data (after CSV changes)
 ```bash
-npm install d3
+python scripts/generate_aggregated_data.py
 ```
 
-### Running Locally
-Use a local server to load CSV data (required for CORS):
+### Run locally
 ```bash
-# Python 3
 python -m http.server 8000
-
-# Node.js
-npx serve
+# Open http://localhost:8000/activity-visualization.html
 ```
 
-## D3.js Architecture Patterns
+### Deploy
+Push to main branch - Vercel auto-deploys. The `vercel.json` rewrites `/` to `/activity-visualization.html`.
 
-### Data Loading
+## Key Files
+
+| File | Purpose |
+|------|---------|
+| `activity-visualization.html` | Main dashboard - all D3.js visualizations in single file |
+| `scripts/generate_aggregated_data.py` | Processes raw CSV → JSON with stats, hourly/daily/monthly counts, heatmap data, contributor rankings, word frequencies |
+| `data/whatsapp-aggregated.json` | Pre-computed data consumed by the dashboard |
+| `whatsapp_analysis.ipynb` | Jupyter notebook for exploratory analysis |
+| `w.csv` | Raw WhatsApp export (gitignored for privacy) |
+
+## Data Format
+
+**Raw CSV** (`w.csv`): `date (YYYY-MM-DD)`, `time (hh:mm)`, `name`, `text`
+- Date format is actually `YY-MM-DD` (e.g., `22-02-18`)
+- Names may be phone numbers (`+351 xxx xxx xxx`) - mapped to real names in `nameMapping` object in the HTML
+
+**Aggregated JSON** structure:
 ```javascript
-const data = await d3.csv('../w.csv', d => ({
-  date: d3.timeParse('%y-%m-%d')(d['date (YYYY-MM-DD)']),
-  time: d['time (hh:mm)'],
-  name: d.name,
-  text: d.text
-}));
+{
+  stats: { totalMessages, uniqueParticipants, activeDays, avgPerDay },
+  hourly: [{ hour, count }],      // 0-23
+  daily: [{ day, count }],        // 0=Monday, 6=Sunday
+  monthly: [{ month, count }],    // "YYYY-MM" format
+  heatmap: [{ day, hour, count }],
+  contributors: [{ name, count }],
+  wordfreq: [{ word, count }]     // Top 100 words
+}
 ```
 
-### SVG Container Setup
+## D3.js Patterns Used
+
+The dashboard uses D3.js v7 with d3-cloud for word clouds. All charts follow the same pattern:
+
 ```javascript
-const margin = {top: 20, right: 20, bottom: 30, left: 40};
-const width = 800 - margin.left - margin.right;
-const height = 400 - margin.top - margin.bottom;
+// Portuguese locale for date formatting
+const localePt = d3.timeFormatLocale({...});
 
-const svg = d3.select('#chart')
-  .append('svg')
-  .attr('width', width + margin.left + margin.right)
-  .attr('height', height + margin.top + margin.bottom)
-  .append('g')
-  .attr('transform', `translate(${margin.left},${margin.top})`);
+// Color scales
+const heatmapColors = d3.scaleSequential(d3.interpolateYlOrRd);
+
+// Standard margin convention
+const margin = { top: 20, right: 20, bottom: 40, left: 50 };
+
+// Data join with .join() (modern D3 pattern)
+g.selectAll('rect').data(data).join('rect')
+  .attr('x', d => xScale(d.hour))
+  .on('mouseover', (event, d) => { tooltip... });
 ```
 
-### Data Join Pattern
-```javascript
-svg.selectAll('rect')
-  .data(dataArray, d => d.id)  // Key function for object constancy
-  .join('rect')
-  .attr('x', d => xScale(d.category))
-  .attr('y', d => yScale(d.value));
-```
+## Privacy Notes
 
-## Visualization Ideas for This Dataset
-
-- **Message frequency over time**: Line chart showing daily/weekly/monthly activity
-- **Top contributors**: Bar chart of messages per participant
-- **Activity by hour/day**: Heatmap of when messages are sent
-- **Social network**: Force-directed graph of who replies to whom
-- **Word cloud**: Most common words/phrases (excluding stopwords)
-- **Sentiment timeline**: If sentiment analysis is applied
-
-## Reference Resources
-
-The `../d3-visualization/` directory contains comprehensive D3.js documentation:
-- `SKILL.md` - Main entry point with workflows
-- `resources/getting-started.md` - Setup and prerequisites
-- `resources/scales-axes.md` - Data transformation
-- `resources/selections-datajoins.md` - DOM manipulation
-- `resources/workflows.md` - Step-by-step chart guides
-- `resources/common-patterns.md` - Reusable templates
+- Raw CSV and images are gitignored
+- Only aggregated statistics are committed/deployed
+- Phone numbers in the HTML `nameMapping` should not be committed to public repos
