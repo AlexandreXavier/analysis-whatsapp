@@ -158,65 +158,48 @@ def parse_row(row: dict[str, str]) -> dict[str, object] | None:
         return None
 
     try:
-        date = datetime.strptime(date_str, "%y-%m-%d")
+        dt = datetime.strptime(f"{date_str} {time_str}", "%y-%m-%d %H:%M")
     except ValueError:
         return None
 
-    hour_str = time_str.split(":")[0] if ":" in time_str else None
-    try:
-        hour = int(hour_str)
-    except (TypeError, ValueError):
-        return None
-
-    # Parse full datetime for interaction analysis
-    dt = None
-    if ":" in time_str:
-        try:
-            dt = datetime.strptime(f"{date_str} {time_str}", "%y-%m-%d %H:%M")
-        except ValueError:
-            pass
+    hour = dt.hour
 
     name = (row.get("name") or "").strip()
-    text = (row.get("text") or "").strip()
 
     return {
-        "date": date,
+        "date": dt.date(),
         "datetime": dt,
         "hour": hour,
-        "day_mon": date.weekday(),  # Monday = 0
-        "year_month": date.strftime("%Y-%m"),
+        "day_mon": dt.weekday(),  # Monday = 0
+        "year_month": dt.strftime("%Y-%m"),
         "name": name or "Desconhecido",
-        "text": text,
     }
 
 
-def build_interactions(parsed_rows: list[dict[str, object]], time_window_minutes: int = 5) -> list[dict[str, object]]:
+def build_interactions(parsed_rows: list[dict[str, object]]) -> list[dict[str, object]]:
     """Build interaction pairs based on consecutive messages within a time window."""
-    from datetime import timedelta
+    interaction_counter = Counter()
 
-    # Sort by datetime
     sorted_rows = sorted(
         [r for r in parsed_rows if r.get("datetime")],
         key=lambda x: x["datetime"]
     )
 
-    interaction_counter = Counter()
-    prev_row = None
-
-    for row in sorted_rows:
-        if prev_row is not None:
-            time_diff = (row["datetime"] - prev_row["datetime"]).total_seconds() / 60
-            if time_diff <= time_window_minutes and row["name"] != prev_row["name"]:
-                # Create sorted pair to avoid duplicates (A->B same as B->A)
-                pair = tuple(sorted([prev_row["name"], row["name"]]))
-                interaction_counter[pair] += 1
-        prev_row = row
+    for idx, entry in enumerate(sorted_rows):
+        if idx > 0:
+            prev = sorted_rows[idx - 1]
+            if entry["name"] != prev["name"]:
+                diff_minutes = (
+                    entry["datetime"] - prev["datetime"]
+                ).total_seconds() / 60
+                if diff_minutes <= 5:
+                    pair = tuple(sorted([entry["name"], prev["name"]]))
+                    interaction_counter[pair] += 1
 
     # Convert to list of dicts for JSON
     interactions = [
         {"source": pair[0], "target": pair[1], "value": count}
         for pair, count in interaction_counter.most_common()
-        if count >= 3  # Filter out weak connections
     ]
 
     return interactions
@@ -234,18 +217,19 @@ def build_aggregates(parsed_rows: list[dict[str, object]]) -> dict[str, object]:
     contributor_counter = Counter()
     word_counter = Counter()
     day_set = set()
-    interactions = build_interactions(parsed_rows)
+    interaction_counter = Counter()
 
     min_date = parsed_rows[0]["date"]
     max_date = parsed_rows[0]["date"]
 
-    for entry in parsed_rows:
+    sorted_rows = sorted(parsed_rows, key=lambda r: r["datetime"])
+
+    for idx, entry in enumerate(sorted_rows):
         date = entry["date"]
         hour = entry["hour"]
         day_mon = entry["day_mon"]
         year_month = entry["year_month"]
         name = entry["name"]
-        text = entry["text"]
 
         hours_counter[hour] += 1
         daily_counter[day_mon] += 1
@@ -254,9 +238,15 @@ def build_aggregates(parsed_rows: list[dict[str, object]]) -> dict[str, object]:
         contributor_counter[name] += 1
         day_set.add(date.strftime("%Y-%m-%d"))
 
-        # Extract words for word cloud
-        words = extract_words(text)
-        word_counter.update(words)
+        if idx > 0:
+            prev = sorted_rows[idx - 1]
+            if name != prev["name"]:
+                diff_minutes = (
+                    entry["datetime"] - prev["datetime"]
+                ).total_seconds() / 60
+                if diff_minutes <= 5:
+                    pair = tuple(sorted([name, prev["name"]]))
+                    interaction_counter[pair] += 1
 
         if date < min_date:
             min_date = date
@@ -294,21 +284,19 @@ def build_aggregates(parsed_rows: list[dict[str, object]]) -> dict[str, object]:
         for name, count in contributor_counter.most_common()
     ]
 
-    # Top 100 words for word cloud
-    wordfreq = [
-        {"word": word, "count": count}
-        for word, count in word_counter.most_common(100)
+    interactions = [
+        {"source": pair[0], "target": pair[1], "value": count}
+        for pair, count in interaction_counter.most_common()
     ]
 
     return {
-        "generatedAt": datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z"),
+        "generatedAt": datetime.utcnow().isoformat(timespec="seconds") + "Z",
         "stats": stats,
         "hourly": hourly,
         "daily": daily,
         "monthly": monthly,
         "heatmap": heatmap,
         "contributors": contributors,
-        "wordfreq": wordfreq,
         "interactions": interactions,
     }
 

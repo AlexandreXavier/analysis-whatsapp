@@ -67,6 +67,7 @@ date (YYYY-MM-DD),time (hh:mm),name,text
 - D3.js v7 para visualizações
 - Pandas para análise de dados
 - JavaScript puro (sem frameworks)
+- Pytest para testes do agregador
 
 ## Privacidade
 
@@ -79,3 +80,18 @@ Projeto concebido para uso pessoal. O `.gitignore` exclui:
 ## Licença
 
 Licença MIT
+
+## Testes
+
+1. Criar e ativar um ambiente Python (opcional, mas recomendado).
+2. Instalar dependências mínimas:
+
+    ```bash
+    pip install pytest
+    ```
+
+3. Executar os testes:
+
+    ```bash
+    pytest
+    ```
